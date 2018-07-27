@@ -1,0 +1,36 @@
+page-home {
+    .card-background-page {
+        ion-card {
+            position: relative;
+            text-align: center;
+        }
+        .card-title {
+            position: absolute;
+            top: 36%;
+            font-size: 2.0em;
+            width: 100%;
+            font-weight: bold;
+            color: #fff;
+        }
+        .card-subtitle {
+            font-size: 1.0em;
+            position: absolute;
+            top: 52%;
+            width: 100%;
+            color: #fff;
+        }
+    }
+    // @import '../../www/assets/fonts/open-sans-regular.ttf';
+    .font-style-home {
+        font-family: 'Open Sans';
+        font-size: 36px;
+        text-shadow: 2px 2px 9px #000;
+        color: #fff;
+    }
+    .ion-card-header-style {
+        text-align: left;
+        color: #fff;
+        background-color: #424242;
+        height: 55px;
+    }
+}

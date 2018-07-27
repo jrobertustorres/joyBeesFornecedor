@@ -1,0 +1,103 @@
+<ion-header>
+
+    <ion-navbar color="dark">
+        <button ion-button menuToggle>
+              <ion-icon name="menu"></ion-icon>
+          </button>
+        <ion-title style="margin-top: 8px;">
+            <span>Orçamentos</span>
+        </ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content class="content-stable card-background-page">
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+
+    <ion-card style="height: 110px; background-color: #fff;" (click)="openCotacoesList('ABERTO')">
+        <ion-card-header class="ion-card-header-style">
+            <ion-row>
+                <ion-col style="font-size: 12px; color: #000;">
+                    ORÇAMENTOS ABERTOS
+                </ion-col>
+                <ion-col style="text-align: right; margin-top: -10px;">
+                    <ion-chip #chip1 style="background-color: #FCD736;">
+                        <ion-label style="color: #000;"><b>{{ cockpitCotacaoEntity.cotacaoAberta }}</b></ion-label>
+                        <button ion-button clear color="light">
+                            <ion-icon ios="ios-arrow-round-forward" md="md-arrow-round-forward" style="color: #000"></ion-icon>
+                        </button>
+                    </ion-chip>
+                </ion-col>
+            </ion-row>
+        </ion-card-header>
+        <ion-card-content style="text-align: left; color: #000; margin-top: 12px;">
+            <b>Aceite ou recuse os orçamentos</b>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card style="height: 110px; background-color: #fff" (click)="openCotacoesList('RESPONDIDO')">
+        <ion-card-header class="ion-card-header-style">
+            <ion-row>
+                <ion-col style="font-size: 12px;">
+                    ORÇAMENTOS RESPONDIDOS
+                </ion-col>
+                <ion-col style="text-align: right; margin-top: -10px;">
+                    <ion-chip #chip1 style="background-color: #FCD736;">
+                        <ion-label style="color: #000;"><b>{{ cockpitCotacaoEntity.cotacaoRespondida }}</b></ion-label>
+                        <button ion-button clear color="light">
+                            <ion-icon ios="ios-arrow-round-forward" md="md-arrow-round-forward" style="color: #000"></ion-icon>
+                        </button>
+                    </ion-chip>
+                </ion-col>
+            </ion-row>
+        </ion-card-header>
+        <ion-card-content style="text-align: left; color: #000; margin-top: 12px;">
+            <b>Aguardando a análise do cliente</b>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card style="height: 110px; background-color: #fff" (click)="openCotacoesList('ESCOLHIDO')">
+        <ion-card-header class="ion-card-header-style">
+            <ion-row>
+                <ion-col style="font-size: 12px;">
+                    ORÇAMENTOS APROVADOS
+                </ion-col>
+                <ion-col style="text-align: right; margin-top: -10px;">
+                    <ion-chip #chip1 style="background-color: #FCD736;">
+                        <ion-label style="color: #000;"><b>{{ cockpitCotacaoEntity.cotacaoEscolhida }}</b></ion-label>
+                        <button ion-button clear color="light">
+                            <ion-icon ios="ios-arrow-round-forward" md="md-arrow-round-forward" style="color: #000"></ion-icon>
+                        </button>
+                    </ion-chip>
+                </ion-col>
+            </ion-row>
+        </ion-card-header>
+        <ion-card-content style="text-align: left; color: #000; margin-top: 12px;">
+            <b>Orçamentos em que você foi escolhido</b>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card style="height: 110px; background-color: #fff" (click)="openCotacoesList('CONCLUIDO')">
+        <ion-card-header class="ion-card-header-style">
+            <ion-row>
+                <ion-col style="font-size: 12px;">
+                    ORÇAMENTOS CONCLUIDOS
+                </ion-col>
+                <ion-col style="text-align: right; margin-top: -10px;">
+                    <ion-chip #chip1 style="background-color: #FCD736;">
+                        <ion-label style="color: #000;"><b>{{ cockpitCotacaoEntity.cotacaoConcluida }}</b></ion-label>
+                        <button ion-button clear color="light">
+                            <ion-icon ios="ios-arrow-round-forward" md="md-arrow-round-forward" style="color: #000"></ion-icon>
+                        </button>
+                    </ion-chip>
+                </ion-col>
+            </ion-row>
+        </ion-card-header>
+        <ion-card-content style="text-align: left; color: #000; margin-top: 12px;">
+            <b>Orçamentos que você já concluiu</b>
+        </ion-card-content>
+    </ion-card>
+
+</ion-content>

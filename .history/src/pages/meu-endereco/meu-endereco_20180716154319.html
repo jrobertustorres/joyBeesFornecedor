@@ -1,0 +1,66 @@
+<ion-header>
+
+    <ion-navbar color="navBar">
+        <button ion-button menuToggle>
+                  <ion-icon name="menu"></ion-icon>
+              </button>
+        <ion-title style="margin-top: 8px;">
+            <span>Meu endereço</span>
+        </ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+    <form [formGroup]="enderecoUsuarioForm" (ngSubmit)="submeterEnderecoUsuario()">
+
+        <ion-list>
+            <ion-item>
+                <ion-label class="my-label">Prefecture</ion-label>
+                <ion-select formControlName="idEstado" [(ngModel)]="usuarioDetalheEntity.idEstado" (ionChange)="getCidadesByEstadoUsuario(usuarioDetalheEntity.idEstado)" cancelText="Cancelar">
+                    <ion-option *ngFor="let estado of estados" value="{{estado.idEstado}}">{{estado.nome}}</ion-option>
+                </ion-select>
+            </ion-item>
+            <div *ngIf="!enderecoUsuarioForm.get('idEstado').valid && enderecoUsuarioForm.get('idEstado').touched" [ngClass]="'class-error-form'">campo obrigatório</div>
+        </ion-list>
+
+        <ion-list>
+            <ion-item>
+                <ion-label class="my-label">Cidade</ion-label>
+                <ion-select formControlName="idCidade" [(ngModel)]="usuarioDetalheEntity.idCidade" cancelText="Cancelar">
+                    <ion-option *ngFor="let cidade of cidades" value="{{cidade.idCidade}}">{{cidade.cidade}}</ion-option>
+                </ion-select>
+            </ion-item>
+            <div *ngIf="!enderecoUsuarioForm.get('idCidade').valid && enderecoUsuarioForm.get('idCidade').touched" [ngClass]="'class-error-form'">campo obrigatório</div>
+        </ion-list>
+
+        <ion-item>
+            <ion-label stacked>Endereço</ion-label>
+            <ion-textarea formControlName="endereco" [(ngModel)]="usuarioDetalheEntity.endereco" rows="5" maxLength="500"></ion-textarea>
+        </ion-item>
+        <div *ngIf="!enderecoUsuarioForm.get('endereco').valid && enderecoUsuarioForm.get('endereco').touched" [ngClass]="'class-error-form'">campo obrigatório</div>
+        <div *ngIf="enderecoUsuarioForm.get('endereco').hasError('maxlength')" [ngClass]="'class-error-form'">máximo 300 caracteres</div>
+
+        <ion-item>
+            <ion-label stacked>Postal code</ion-label>
+            <ion-input formControlName="cep" color="dark" [(ngModel)]="usuarioDetalheEntity.cep" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></ion-input>
+        </ion-item>
+        <div *ngIf="!enderecoUsuarioForm.get('cep').valid && enderecoUsuarioForm.get('cep').touched" [ngClass]="'class-error-form'">campo obrigatório</div>
+        <!-- <div *ngIf="dadosUsuarioForm.get('cep').hasError('maxlength')" [ngClass]="'class-error-form'">máximo 100 caracteres</div> -->
+
+        <ion-item>
+            <ion-label stacked>Company name or Apartment name</ion-label>
+            <ion-input formControlName="nomeResidencia" color="dark" [(ngModel)]="usuarioDetalheEntity.nomeResidencia" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></ion-input>
+        </ion-item>
+        <div *ngIf="!enderecoUsuarioForm.get('nomeResidencia').valid && enderecoUsuarioForm.get('nomeResidencia').touched" [ngClass]="'class-error-form'">campo obrigatório</div>
+        <div *ngIf="enderecoUsuarioForm.get('nomeResidencia').hasError('maxlength')" [ngClass]="'class-error-form'">máximo 100 caracteres</div>
+
+
+        <div padding>
+            <button ion-button block type="submit" color="navBar" class="margin-button-save span-style-color">SALVAR</button>
+        </div>
+
+    </form>
+
+
+</ion-content>
