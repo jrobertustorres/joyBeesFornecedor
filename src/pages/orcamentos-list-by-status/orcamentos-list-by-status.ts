@@ -54,8 +54,6 @@ export class OrcamentosListByStatusPage {
       .then((cotacaoServiceResult: CotacaoEntity) => {
         this.cotacoesList = cotacaoServiceResult;
 
-        console.log(this.cotacoesList);
-
         this.loading.dismiss();
       }, (err) => {
         this.loading.dismiss();

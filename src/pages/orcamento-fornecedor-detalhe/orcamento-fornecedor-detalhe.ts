@@ -109,8 +109,6 @@ export class OrcamentoFornecedorDetalhePage {
       .then((cotacaoServiceResult: CotacaoFornecedorEntity) => {
         this.cotacaoFornecedorEntity = cotacaoServiceResult;
 
-        console.log(this.cotacaoFornecedorEntity);
-
         // if (this.cotacaoFornecedorEntity.dataEntrega != null && this.cotacaoFornecedorEntity.validadeOrcamento != null) {
         //   this.dataEntrega = new Date(this.cotacaoFornecedorEntity.dataEntrega).toJSON().split('T')[0];
         //   this.validadeOrcamento = new Date(this.cotacaoFornecedorEntity.validadeOrcamento).toJSON().split('T')[0];
@@ -232,7 +230,6 @@ export class OrcamentoFornecedorDetalhePage {
           this.validadeOrcamentoServidor = 1531501054000;
           this.cotacaoFornecedorEntity.dataEntrega = this.dataEntregaServidor;
           this.cotacaoFornecedorEntity.validadeOrcamento = this.validadeOrcamentoServidor;
-          console.log(this.cotacaoFornecedorEntity);
 
             this.cotacaoService
             .confirmarPedido(this.cotacaoFornecedorEntity)
