@@ -97,7 +97,7 @@ export class MenuPage implements OnInit{
       this.loading.present();
 
       this.usuarioEntity.idUsuario = idUsuario;
-      this.loginService.loginByIdFornecedorServicos(this.usuarioEntity)
+      this.loginService.loginByIdFornecedor(this.usuarioEntity)
         .then((usuarioEntityResult: UsuarioEntity) => {
           this.rootPage = HomePage;
           this.loading.dismiss();

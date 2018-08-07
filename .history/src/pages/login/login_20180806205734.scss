@@ -29,11 +29,14 @@
 .logo-style {
     display: block;
     width: 260px;
+    // width: 100%;
     height: auto;
     margin-left: auto;
     margin-right: auto;
+    // margin-top: 30px;
     margin-bottom: -10px;
     padding: 20px;
+    // padding: 10px;
 }
 
 .custom-logo-tool-login {
@@ -49,15 +52,11 @@
 }
 
 .span-fornecedor {
+    // margin-left: 160px;
+    // position: absolute;
+    float: right;
     color: #FDB313;
     font-weight: 400;
-    display: block;
-    width: 260px;
-    height: auto;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: -20px;
-    padding: 20px;
-    text-align: right;
-    margin-top: -30px;
+    padding: 5px 26px;
+    position: absolute !important;
 }

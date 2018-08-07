@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.logiictecnologia.joybeesfornecedor" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>JoyBees Fornecedor</name>
+    <name>JoyBeesFornecedor</name>
     <description>An awesome JoyBees app.</description>
     <author email="diretoria@logiic.com.br" href="joybees.com">Logiic Tecnology Team</author>
     <content src="index.html" />
@@ -97,7 +97,5 @@
         <variable name="SENDER_ID" value="665263696484" />
         <variable name="FCM_VERSION" value="11.6.2" />
     </plugin>
-    <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <engine name="android" spec="^6.3.0" />
-    <engine name="ios" spec="^4.5.5" />
 </widget>

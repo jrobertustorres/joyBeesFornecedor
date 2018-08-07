@@ -14,7 +14,7 @@
 <ion-content>
     <div padding *ngIf="cotacaoFornecedorEntity.nomeUsuario">
         <p class="h2-color-cards" *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'ESCOLHIDO'">
-            <strong>{{ 'PARABENS' | translate}}</strong>
+            <strong>Parabéns! Seu orçamento foi escolhido pelo cliente.</strong>
         </p>
 
         <span style="font-size: 14px;">Orçamento: <b>{{ cotacaoFornecedorEntity.idOrcamentoFormat }}</b></span>

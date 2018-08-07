@@ -1,8 +1,7 @@
 export class Constants {
 
-  public static API_URL: string = 'http://www.servico.carwapp.com.br:8190/carwappMobileService/';
-  // public static API_URL: string = 'http://localhost:8080/carwappMobileService/';
-  // public static API_URL: string = 'http://192.168.0.6:8080/carwappMobileService/';
+  // public static API_URL: string = 'http://localhost:8080/joyBeesMobileService/';
+  public static API_URL: string = 'http://192.168.1.4:8080/joyBeesMobileService/';
 
   public static ID_USUARIO = 'id_usuario';
   public static TOKEN_USUARIO = 'token_usuario';
@@ -13,4 +12,5 @@ export class Constants {
   public static APP_NAME = 'app_name';
   public static VERSION_CODE = 'version_code';
   public static VERSION_NUMBER = 'version_number';
+  public static QTD_TICKET_FORNECEDOR = 'qtd_ticket_fornecedor';
 }

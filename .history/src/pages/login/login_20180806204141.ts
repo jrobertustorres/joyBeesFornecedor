@@ -74,7 +74,7 @@ export class LoginPage implements OnInit {
         });
         this.loading.present();
 
-      this.loginService.login(this.loginForm.value)
+      this.loginService.loginFornecedorServicos(this.loginForm.value)
         .then((usuarioEntityResult: UsuarioEntity) => {
 
           this.navCtrl.setRoot(HomePage);

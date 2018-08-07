@@ -52,7 +52,17 @@
 }
 
 .span-fornecedor {
-    margin-left: 160px;
-    position: absolute;
+    // float: right;
     color: #FDB313;
+    font-weight: 400;
+    // padding: 5px 26px;
+    // position: absolute !important;
+    display: block;
+    width: 260px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: -10px;
+    padding: 20px;
+    text-align: right;
 }

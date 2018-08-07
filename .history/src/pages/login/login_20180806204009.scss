@@ -28,7 +28,7 @@
 
 .logo-style {
     display: block;
-    width: 230px;
+    width: 260px;
     // width: 100%;
     height: auto;
     margin-left: auto;
@@ -44,4 +44,17 @@
     top: 115px !important;
     right: 45px !important;
     width: 60px !important;
+}
+
+.div-style-logo {
+    margin-top: 40px;
+    margin-bottom: 50px;
+}
+
+.span-fornecedor {
+    // margin-left: 160px;
+    // position: absolute;
+    float: right;
+    color: #FDB313;
+    font-weight: 400;
 }
