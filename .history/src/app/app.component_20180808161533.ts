@@ -9,7 +9,7 @@ import { Network } from '@ionic-native/network';
 
 //PAGES
 import { MenuPage } from '../pages/menu/menu';
-import { HomePage } from '../pages/home/home';
+import { HomePage } from './../pages/home/home';
 
 @Component({
   template: '<ion-nav #baseNav></ion-nav>'
@@ -38,6 +38,7 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      this.platform.registerBackButtonAction(()=>this.myHandlerFunction());
       if (this.platform.is('cordova')) {
         this.appVersion.getVersionNumber().then((version) => {
           localStorage.setItem(Constants.VERSION_NUMBER, version);
@@ -57,6 +58,10 @@ export class MyApp {
     });
   }
 
+  myHandlerFunction(){
+    //desabilitando o botão de voltar do android
+  }
+
   initPushNotification() {
     if (!this.platform.is('cordova')) {
       console.warn('Push notifications not initialized. Cordova is not available - Run in physical device');
@@ -64,7 +69,7 @@ export class MyApp {
     }
     const options: PushOptions = {
       android: {
-        senderID: '987453257101',
+        senderID: '665263696484',
         sound   : 'true',
         vibrate : true
         // icon    : 'icon'

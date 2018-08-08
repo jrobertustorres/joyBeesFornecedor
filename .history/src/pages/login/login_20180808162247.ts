@@ -74,8 +74,10 @@ export class LoginPage implements OnInit {
       this.loginService.loginFornecedorServicos(this.loginForm.value)
         .then((usuarioEntityResult: UsuarioEntity) => {
 
-          this.navCtrl.setRoot(HomePage);
           this.loading.dismiss();
+          setTimeout(() => {
+            this.navCtrl.setRoot(HomePage);
+          }, 2000);
         }, (err) => {
           this.loading.dismiss();
           this.alertCtrl.create({

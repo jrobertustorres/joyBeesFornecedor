@@ -73,6 +73,7 @@ export class MeusDadosPage implements OnInit {
     try {
       this.loadingDados = this.loadingCtrl.create({
         content: 'Aguarde...',
+        dismissOnPageChange: true
       });
       this.loadingDados.present();
 
@@ -80,6 +81,9 @@ export class MeusDadosPage implements OnInit {
         .findDadosFornecedor()
         .then((fornecedorEntityResult) => {
           this.fornecedorEntity = fornecedorEntityResult;
+
+          // this.getCampoCpf(this.usuarioDetalheEntity.cpfPessoa);
+          // this.getCampoTelefone(this.usuarioDetalheEntity.telefonePessoa);
 
           this.loadingDados.dismiss();
         })
@@ -103,6 +107,7 @@ export class MeusDadosPage implements OnInit {
       if (this.dadosFornecedorForm.valid) {
         this.loading = this.loadingCtrl.create({
           content: 'Aguarde...',
+          dismissOnPageChange: true
         });
         this.loading.present();
 

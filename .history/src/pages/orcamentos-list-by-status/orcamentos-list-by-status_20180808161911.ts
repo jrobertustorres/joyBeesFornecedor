@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Constants } from '../../app/constants';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 
 //SERVICES
@@ -21,6 +22,7 @@ export class OrcamentosListByStatusPage {
   private cotacoesList: any;
   private cotacaoEntity: CotacaoEntity;
   private aux = [];
+  public qtdTicketFornecedor: string;
 
   constructor(public navCtrl: NavController,
               public alertCtrl: AlertController,
@@ -33,6 +35,7 @@ export class OrcamentosListByStatusPage {
   
   ngOnInit() {
     this.findOrcamentosListByStatus();
+    this.qtdTicketFornecedor = localStorage.getItem(Constants.QTD_TICKET_FORNECEDOR);
   }
 
   ionViewDidLoad() {
@@ -41,11 +44,12 @@ export class OrcamentosListByStatusPage {
   findOrcamentosListByStatus() {
     try {
       this.loading = this.loadingCtrl.create({
-        content: 'Aguarde...'
+        content: 'Aguarde...',
       });
       this.loading.present();
 
       this.cotacaoEntity.statusCotacaoEnum = this.status;
+
       this.cockpitCotacaoService.findCotacaoFornecedorByStatus(this.cotacaoEntity)
       .then((cotacaoServiceResult: CotacaoEntity) => {
         this.cotacoesList = cotacaoServiceResult;
@@ -78,8 +82,8 @@ export class OrcamentosListByStatusPage {
     }
   
     this.cotacoesList = this.cotacoesList.filter((v) => {
-      if(v.cotacao && q) {
-        if ((v.idOrcamentoFormat.toLowerCase().indexOf(q.toLowerCase()) && v.nomeCliente.toLowerCase().indexOf(q.toLowerCase())) > -1) {
+      if(v.idOrcamentoFormat && v.dataCadastroFormat && q) {
+        if ((v.idOrcamentoFormat.toLowerCase().indexOf(q.toLowerCase()) && v.dataCadastroFormat.toLowerCase().indexOf(q.toLowerCase())) > -1) {
           return true;
         }
         return false;
@@ -87,26 +91,21 @@ export class OrcamentosListByStatusPage {
     });
   }
 
-  // getItems(searchbar) {
-  //   let q = searchbar.srcElement.value;
-  //   if (!q) {
-  //     this.findOrcamentosListByStatus();
-  //   }
-  
-  //   this.cotacoesList = this.cotacoesList.filter((v) => {
-  //     // if(v.servico && v.tipoServico && q) {
-  //     if(v.idOrcamentoFormat && v.nomeCliente && q) {
-  //       // if (v.cotacao.toLowerCase().indexOf(q.toLowerCase()) > -1) {
-  //         if ((v.idOrcamentoFormat.toLowerCase().indexOf(q.toLowerCase()) && v.nomeCliente.toLowerCase().indexOf(q.toLowerCase())) > -1) {
-  //           return true;
-  //         }
-  //         return false;
-  //       }
-  //   });
-  // }
-
   openDetalhaCotacao(idCotacao, statusCotacao) {
-    this.navCtrl.push(OrcamentoFornecedorDetalhePage, {idCotacao: idCotacao, statusCotacao: statusCotacao});
+    // if(this.qtdTicketFornecedor == '0' && statusCotacao == 'ABERTO') {
+    //   this.alertTicket();
+    // } else {
+      this.navCtrl.push(OrcamentoFornecedorDetalhePage, {idCotacao: idCotacao, statusCotacao: statusCotacao});
+    // }
   }
+
+  // alertTicket() {
+  //   const alert = this.alertCtrl.create({
+  //     title: 'Tickets insuficientes!',
+  //     subTitle: 'Você não possui tickets suficientes para ver este orçamento!',
+  //     buttons: ['OK']
+  //   });
+  //   alert.present();
+  // }
 
 }

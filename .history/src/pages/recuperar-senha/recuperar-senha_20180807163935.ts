@@ -9,7 +9,7 @@ import { UsuarioEntity } from '../../model/usuario-entity';
 import { UsuarioService } from '../../providers/usuario-service';
 
 //PAGES
-import { LoginPage } from './../login/login';
+// import { EntrarCadastrarPage } from '../entrar-cadastrar/entrar-cadastrar';
 
 // @IonicPage()
 @Component({
@@ -64,6 +64,7 @@ export class RecuperarSenhaPage implements OnInit {
           this.loading = 'Aguarde...';
         this.loading = this.loadingCtrl.create({
           content: this.loading,
+          dismissOnPageChange: true
         });
         this.loading.present();
 
@@ -74,7 +75,7 @@ export class RecuperarSenhaPage implements OnInit {
           this.loading.dismiss();
           this.presentToast();
           setTimeout(() => {
-            this.navCtrl.push(LoginPage);
+            // this.navCtrl.push(EntrarCadastrarPage);
           }, 3000);
         }, (err) => {
           this.loading.dismiss();

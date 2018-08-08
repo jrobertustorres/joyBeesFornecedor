@@ -38,6 +38,7 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      this.platform.registerBackButtonAction(()=>this.myHandlerFunction());
       if (this.platform.is('cordova')) {
         this.appVersion.getVersionNumber().then((version) => {
           localStorage.setItem(Constants.VERSION_NUMBER, version);
@@ -55,6 +56,10 @@ export class MyApp {
         // disconnectSubscription.unsubscribe();
       });
     });
+  }
+
+  myHandlerFunction(){
+    //desabilitando o botão de voltar do android
   }
 
   initPushNotification() {

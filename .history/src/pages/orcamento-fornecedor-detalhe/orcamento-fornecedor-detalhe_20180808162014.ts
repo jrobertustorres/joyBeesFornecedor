@@ -286,6 +286,7 @@ export class OrcamentoFornecedorDetalhePage {
     try {
       this.loading = this.loadingCtrl.create({
         content: 'Aguarde...',
+        dismissOnPageChange: true
       });
       this.loading.present();
 

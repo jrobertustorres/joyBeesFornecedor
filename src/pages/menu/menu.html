@@ -14,10 +14,8 @@
                 <h2 style="color: #fff">{{ nomePessoa }}</h2>
             </div>
             <div style="margin-bottom: -10px;">
-                <!-- <span padding [ngClass]="(qtdTicketFornecedor > '0')?'corAmarela':'corDanger'"><b>Você possui {{ qtdTicketFornecedor }} tickets</b></span> -->
                 <span padding *ngIf="qtdTicketFornecedor > 0" class="corAmarela"><b>Você possui {{ qtdTicketFornecedor }} tickets</b></span>
                 <span padding *ngIf="qtdTicketFornecedor == 0" class="corDanger"><b>Você não possui tickets</b></span>
-                <button ion-button color="yellowTicket" outline small>COMPRAR TICKET</button>
             </div>
             <hr>
         </ion-card>
@@ -31,9 +29,6 @@
                 <ion-icon [name]="p.icon" item-left item-start color="light" *ngIf='p.isVisible'></ion-icon>
                 <h4 *ngIf='p.isVisible' style="color: #fff">{{p.title}}</h4>
             </button>
-            <!-- 
-            <button block (click)="openCamera()">Open camera</button>
-            <button block (click)="selectFromGallery()">Select from gallery</button> -->
 
             <ion-item menu-close ion-item color="white" (click)="logout()" class="my-position-button" style="background-color: #424242;">
                 <ion-icon ios="ios-exit" md="ios-exit" item-start color="light"></ion-icon>
@@ -44,5 +39,4 @@
 
 </ion-menu>
 
-<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
 <ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

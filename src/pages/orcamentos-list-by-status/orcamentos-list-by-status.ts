@@ -44,7 +44,7 @@ export class OrcamentosListByStatusPage {
   findOrcamentosListByStatus() {
     try {
       this.loading = this.loadingCtrl.create({
-        content: 'Aguarde...'
+        content: 'Aguarde...',
       });
       this.loading.present();
 
@@ -90,24 +90,6 @@ export class OrcamentosListByStatusPage {
       }
     });
   }
-
-  // getItems(searchbar) {
-  //   let q = searchbar.srcElement.value;
-  //   if (!q) {
-  //     this.findOrcamentosListByStatus();
-  //   }
-  
-  //   this.cotacoesList = this.cotacoesList.filter((v) => {
-  //     // if(v.servico && v.tipoServico && q) {
-  //     if(v.idOrcamentoFormat && v.nomeCliente && q) {
-  //       // if (v.cotacao.toLowerCase().indexOf(q.toLowerCase()) > -1) {
-  //         if ((v.idOrcamentoFormat.toLowerCase().indexOf(q.toLowerCase()) && v.nomeCliente.toLowerCase().indexOf(q.toLowerCase())) > -1) {
-  //           return true;
-  //         }
-  //         return false;
-  //       }
-  //   });
-  // }
 
   openDetalhaCotacao(idCotacao, statusCotacao) {
     // if(this.qtdTicketFornecedor == '0' && statusCotacao == 'ABERTO') {

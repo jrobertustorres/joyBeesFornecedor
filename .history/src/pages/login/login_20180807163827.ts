@@ -66,8 +66,10 @@ export class LoginPage implements OnInit {
       
       if (this.loginForm.valid) {
 
+        // this.loadingText = 'Aguarde...';
         this.loading = this.loadingCtrl.create({
           content: 'Aguarde...',
+          dismissOnPageChange: true
         });
         this.loading.present();
 

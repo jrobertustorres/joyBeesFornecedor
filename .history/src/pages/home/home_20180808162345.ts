@@ -27,10 +27,6 @@ export class HomePage {
   }
 
   ngOnInit() {
-    this.loading = this.loadingCtrl.create({
-      content: 'Aguarde...'
-    });
-    this.loading.present();
     this.getCockpitCotacaoByUsuario();
   }
 
@@ -44,12 +40,12 @@ export class HomePage {
 
   getCockpitCotacaoByUsuario() {
     try {
-      // this.loading = this.loadingCtrl.create({
-      //   content: 'Aguarde...'
-      // });
-      // this.loading.present();
+      this.loading = this.loadingCtrl.create({
+        content: 'Aguarde...',
+      });
+      this.loading.present();
 
-      this.cockpitCotacaoService.findCockpitCotacaoByUsuario(this.cockpitCotacaoEntity)
+      this.cockpitCotacaoService.findCockpitCotacaoByFornecedor(this.cockpitCotacaoEntity)
       .then((cockpitCotacaoServiceResult: CockpitCotacaoEntity) => {
         this.cockpitCotacaoEntity = cockpitCotacaoServiceResult;
 

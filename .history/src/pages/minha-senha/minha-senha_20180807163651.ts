@@ -70,6 +70,7 @@ export class MinhaSenhaPage {
         
         this.loading = this.loadingCtrl.create({
           content: 'Aguarde...',
+          dismissOnPageChange: true
         });
         this.loading.present();
 

@@ -66,8 +66,13 @@ export class OrcamentoFornecedorDetalhePage {
     });
     this.isReadOnly = this.statusCotacao == 'ABERTO' ? false : true;
 
+    // if(this.isReadOnly) {
     this.respostaServicoForm.controls.dataEntrega.disable();
     this.respostaServicoForm.controls.validadeOrcamento.disable();
+    // } else {
+    //   this.respostaServicoForm.controls.dataEntrega.enable();
+    //   this.respostaServicoForm.controls.validadeOrcamento.enable();
+    // }
   }
 
   ionViewDidLoad() {
@@ -94,7 +99,7 @@ export class OrcamentoFornecedorDetalhePage {
   findOrcamentosDetalhes() {
     try {
       this.loading = this.loadingCtrl.create({
-        content: 'Aguarde...',
+        content: 'Aguarde...'
       });
       this.loading.present();
 
@@ -204,6 +209,7 @@ export class OrcamentoFornecedorDetalhePage {
 
           this.loading = this.loadingCtrl.create({
             content: 'Aguarde...',
+            dismissOnPageChange: true
           });
           this.loading.present();
 
@@ -233,9 +239,7 @@ export class OrcamentoFornecedorDetalhePage {
               this.loading.dismiss();
               this.myToast = 'O orçamento foi respondido!';
               this.presentToast();
-              setTimeout(() => {
-                this.navCtrl.setRoot(HomePage);
-              }, 3000);
+              this.navCtrl.setRoot(HomePage);
             }, (err) => {
               this.loading.dismiss();
               this.alertCtrl.create({
@@ -286,6 +290,7 @@ export class OrcamentoFornecedorDetalhePage {
     try {
       this.loading = this.loadingCtrl.create({
         content: 'Aguarde...',
+        dismissOnPageChange: true
       });
       this.loading.present();
 
