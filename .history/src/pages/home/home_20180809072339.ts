@@ -42,22 +42,19 @@ export class HomePage {
   getCockpitCotacaoByUsuario() {
     try {
       if(this.refresh == false) {
-        this.loading = this.loadingCtrl.create({
-          content: 'Aguarde...',
-        });
-        this.loading.present();
-      }
+      this.loading = this.loadingCtrl.create({
+        content: 'Aguarde...',
+      });
+      this.loading.present();
+    }
 
       this.cockpitCotacaoService.findCockpitCotacaoByFornecedor(this.cockpitCotacaoEntity)
       .then((cockpitCotacaoServiceResult: CockpitCotacaoEntity) => {
         this.cockpitCotacaoEntity = cockpitCotacaoServiceResult;
 
-        console.log(this.cockpitCotacaoEntity);
-
-        this.refresh = true;
-        this.loading ? this.loading.dismiss() : '';
+        this.loading.dismiss();
       }, (err) => {
-        this.loading ? this.loading.dismiss() : '';
+        this.loading.dismiss();
         this.alertCtrl.create({
           subTitle: err.message,
           buttons: ['OK']

@@ -52,12 +52,9 @@ export class HomePage {
       .then((cockpitCotacaoServiceResult: CockpitCotacaoEntity) => {
         this.cockpitCotacaoEntity = cockpitCotacaoServiceResult;
 
-        console.log(this.cockpitCotacaoEntity);
-
-        this.refresh = true;
-        this.loading ? this.loading.dismiss() : '';
+        this.loading.dismiss();
       }, (err) => {
-        this.loading ? this.loading.dismiss() : '';
+        this.loading.dismiss();
         this.alertCtrl.create({
           subTitle: err.message,
           buttons: ['OK']

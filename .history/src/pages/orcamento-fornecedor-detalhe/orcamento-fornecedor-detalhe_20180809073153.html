@@ -22,7 +22,7 @@
     </div>
     <div *ngIf="cotacaoFornecedorEntity.nomeUsuario" style="margin-bottom: 70px;">
 
-        <div *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'ESCOLHIDO' || cotacaoFornecedorEntity.statusCotacaoEnum == 'CONCLUIDO'">
+        <div>
             <ion-item-divider class="item-divider-style" style="margin-top: 0px;">
                 <b style="color: #000; font-size: 14px;">Dados do cliente</b>
                 <div item-content>
@@ -62,9 +62,6 @@
 
             </div>
         </div>
-
-        <p>Prefeitura: {{ cotacaoFornecedorEntity.nomeEstadoUsuario }}</p>
-        <p>Cidade: {{ cotacaoFornecedorEntity.nomeCidadeUsuario }}</p>
 
         <form [formGroup]="respostaServicoForm" style="margin-top: -15px;">
 
