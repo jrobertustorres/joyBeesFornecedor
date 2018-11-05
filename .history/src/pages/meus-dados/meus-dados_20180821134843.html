@@ -1,0 +1,59 @@
+<ion-header>
+
+    <ion-navbar color="dark">
+        <ion-title>Meus dados</ion-title>
+    </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+    <form [formGroup]="dadosFornecedorForm" (ngSubmit)="submeterDadosFornecedor()">
+
+        <ion-item-divider class="item-divider-style" style="margin-top: 0px;">
+            <b style="color: #000">Dados pessoais</b>
+            <div item-content>
+                <ion-icon ios="ios-person" md="md-person" item-start style="color: #000"></ion-icon>
+            </div>
+        </ion-item-divider>
+
+        <ion-item>
+            <ion-label stacked>Nome</ion-label>
+            <ion-input formControlName="nome" color="dark" [(ngModel)]="fornecedorEntity.nome" type="text" [readonly]="true" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></ion-input>
+        </ion-item>
+        <!-- <div *ngIf="!dadosUsuarioForm.get('nomePessoa').valid && dadosUsuarioForm.get('nomePessoa').touched" [ngClass]="'class-error-form'">campo obrigatório</div> -->
+        <!-- <div *ngIf="dadosUsuarioForm.get('nomePessoa').hasError('maxlength')" [ngClass]="'class-error-form'">máximo 100 caracteres</div> -->
+
+        <ion-item>
+            <ion-label stacked>E-mail</ion-label>
+            <ion-input formControlName="email" [(ngModel)]="fornecedorEntity.email" type="email" [readonly]="true"></ion-input>
+        </ion-item>
+        <!-- <div *ngIf="(!dadosUsuarioForm.get('emailUsuario').valid && dadosUsuarioForm.get('emailUsuario').touched) && !dadosUsuarioForm.get('emailUsuario').hasError('pattern')" [ngClass]="'class-error-form'">campo obrigatório</div> -->
+        <!-- <div *ngIf="dadosUsuarioForm.get('emailUsuario').hasError('pattern')" [ngClass]="'class-error-form'">e-mail inválido</div> -->
+
+        <ion-item>
+            <ion-label stacked>Telefone</ion-label>
+            <ion-input formControlName="telefone" [(ngModel)]="fornecedorEntity.telefone" type="text" maxlength="16"></ion-input>
+            <!-- <ion-input formControlName="telefone" color="dark" [(ngModel)]="fornecedorEntity.telefone" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></ion-input> -->
+        </ion-item>
+        <div *ngIf="!dadosUsuarioForm.get('telefone').valid && dadosUsuarioForm.get('telefone').touched" [ngClass]="'class-error-form'">campo obrigatório</div>
+        <!-- <div *ngIf="dadosFornecedorForm.get('telefone').hasError('maxlength')" [ngClass]="'class-error-form'">máximo 50 caracteres</div> -->
+
+        <ion-item>
+            <ion-label stacked>Telefone2</ion-label>
+            <ion-input formControlName="telefone2" [(ngModel)]="fornecedorEntity.telefone2" type="text" maxlength="16"></ion-input>
+        </ion-item>
+        <!-- <div *ngIf="dadosFornecedorForm.get('telefone2').hasError('maxlength')" [ngClass]="'class-error-form'">máximo 50 caracteres</div> -->
+
+        <ion-item>
+            <ion-label stacked>Site</ion-label>
+            <ion-input formControlName="site" color="dark" [(ngModel)]="fornecedorEntity.site" type="text" maxlength="100" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></ion-input>
+        </ion-item>
+        <!-- <div *ngIf="dadosFornecedorForm.get('site').hasError('maxlength')" [ngClass]="'class-error-form'">máximo 100 caracteres</div> -->
+
+        <div padding>
+            <button ion-button block type="submit" color="navbarColor" class="margin-button-save" style="color: #000;"><span style="color: #FDB313">SALVAR</span></button>
+            <!-- <button ion-button block type="submit" color="button-save-color" class="margin-button-save span-style-color">SALVAR</button> -->
+        </div>
+    </form>
+
+</ion-content>

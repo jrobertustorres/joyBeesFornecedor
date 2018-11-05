@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, ToastController, Platform } from 'ionic-angular';
 import { FormBuilder,	FormGroup, Validators } from '@angular/forms';
 import { DatePicker } from '@ionic-native/date-picker';
 
@@ -8,6 +8,7 @@ import {MaskMoneyUtil} from "../../utilitarios/maskMoney";
 //ENTITYS
 import { CotacaoFornecedorEntity } from '../../model/cotacao-fornecedor-entity';
 import { ServicoCotacaoFornecedorEntity } from '../../model/servico-cotacao-fornecedor-entity';
+import { CotacaoEntity } from './../../model/cotacao-entity';
 
 //SERVICES
 import { CockpitCotacaoService } from '../../providers/cockpit-cotacao-service';
@@ -28,6 +29,7 @@ export class OrcamentoFornecedorDetalhePage {
   public respostaServicoForm: FormGroup;
   private cotacaoFornecedorEntity: CotacaoFornecedorEntity;
   private servicoCotacaoFornecedorEntity: ServicoCotacaoFornecedorEntity;
+  private cotacaoEntity: CotacaoEntity;
   private isReadOnly = null;
   listServicoResposta: any[];
   public dataEntrega: string;
@@ -36,6 +38,7 @@ export class OrcamentoFornecedorDetalhePage {
   public validadeOrcamentoServidor: any;
   public valorServico: any;
   public myToast: string;
+  public respostaServicoFormat: any;
 
   constructor(public navCtrl: NavController,
               public alertCtrl: AlertController,
@@ -46,9 +49,11 @@ export class OrcamentoFornecedorDetalhePage {
               private cotacaoService: CotacaoService,
               private toastCtrl: ToastController,
               private maskMoney: MaskMoneyUtil,
+              public platform: Platform,
               public navParams: NavParams) {
     this.cotacaoFornecedorEntity = new CotacaoFornecedorEntity;
     this.servicoCotacaoFornecedorEntity = new ServicoCotacaoFornecedorEntity;
+    this.cotacaoEntity = new CotacaoEntity;
     this.idCotacao = navParams.get("idCotacao");
     this.statusCotacao = navParams.get("statusCotacao");
 
@@ -57,7 +62,7 @@ export class OrcamentoFornecedorDetalhePage {
   ngOnInit() {
     this.findOrcamentosDetalhes();
     this.respostaServicoForm = this.formBuilder.group({
-      'valorServico': ['', [Validators.maxLength(100)]],
+      'valorServico': ['', [Validators.required, Validators.maxLength(100)]],
       'observacaoServicoCotacao': ['', [Validators.maxLength(200)]],
       'dataEntrega': ['', Validators.required],
       'validadeOrcamento': ['', Validators.required],
@@ -99,18 +104,18 @@ export class OrcamentoFornecedorDetalhePage {
       this.loading.present();
 
       this.cotacaoFornecedorEntity.idCotacao = this.idCotacao;
-
       this.cockpitCotacaoService.detalhaCotacaoFornecedorByIdCotacao(this.cotacaoFornecedorEntity)
       .then((cotacaoServiceResult: CotacaoFornecedorEntity) => {
         this.cotacaoFornecedorEntity = cotacaoServiceResult;
 
-        // if (this.cotacaoFornecedorEntity.dataEntrega != null && this.cotacaoFornecedorEntity.validadeOrcamento != null) {
-        //   this.dataEntrega = new Date(this.cotacaoFornecedorEntity.dataEntrega).toJSON().split('T')[0];
-        //   this.validadeOrcamento = new Date(this.cotacaoFornecedorEntity.validadeOrcamento).toJSON().split('T')[0];
-        // }
-
-        this.dataEntrega = new Date().toISOString();
-        this.validadeOrcamento = new Date().toISOString();
+        // para testes no browser com data
+        if (!this.platform.is('cordova')) {
+          this.dataEntrega = new Date().toISOString();
+          this.validadeOrcamento = new Date().toISOString();
+  
+          this.dataEntregaServidor = this.dataEntrega;
+          this.validadeOrcamentoServidor = this.validadeOrcamento;
+        }
 
         this.listServicoResposta = this.cotacaoFornecedorEntity.listServicoCotacaoFornecedorEntity;
 
@@ -138,14 +143,7 @@ export class OrcamentoFornecedorDetalhePage {
   
   toggleSection(i) {
     this.listServicoResposta[i].open = !this.listServicoResposta[i].open;
-    // this.cotacaoFornecedorEntity.listServicoCotacaoFornecedorEntity[i].open = !this.cotacaoFornecedorEntity.listServicoCotacaoFornecedorEntity[i].open;
   }
-  
-  // toggleItem(i, j) {//NÃO SERÁ USADO
-    // this.listServicoResposta[i].open = !this.listServicoResposta[i].open;
-    // this.information[i].children[j].open = !this.information[i].children[j].open;
-    // this.cotacaoFornecedorEntity.listServicoCotacaoFornecedorEntity[i].nomeServico[j].open = !this.cotacaoFornecedorEntity.listServicoCotacaoFornecedorEntity[i].children[j].open;
-  // }
   
   selecionaDataEntrega() {
     this.datePicker.show({
@@ -156,12 +154,9 @@ export class OrcamentoFornecedorDetalhePage {
       androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
     })
     .then(dataEntrega => {
-      this.dataEntregaServidor = dataEntrega;
       this.dataEntrega = dataEntrega.toISOString();
-      console.log(dataEntrega);
+      this.dataEntregaServidor = dataEntrega;
     }, (err) => {
-      console.log('Error occurred while getting date: ', err);
-      console.log('---------------------------------------- ', err);
     });
   }
   
@@ -176,58 +171,36 @@ export class OrcamentoFornecedorDetalhePage {
     .then(validadeOrcamento => {
       this.validadeOrcamento = validadeOrcamento.toISOString();
       this.validadeOrcamentoServidor = validadeOrcamento;
-      console.log(validadeOrcamento);
     }, (err) => {
-      console.log('Error occurred while getting date: ', err);
-      console.log('---------------------------------------- ', err);
     });
-  }
-  
-  showAlert() {
-    let alert = this.alertCtrl.create({
-      title: 'Falha ao responder!',
-      subTitle: 'Ao aceitar o orçamento, é necessário informar o valor do serviço na lista de Produtos/serviços do orçamento.',
-      buttons: ['OK']
-    });
-    alert.present();
   }
   
   aprovarCotacao() {
     try {
 
       if (this.respostaServicoForm.valid) {
-
-        // fazer um for aqui para quando temos muitos serviços
-        // não sei se devemos fazer um for, pois o fornecedor pode aceitar somente um dos serviços e não informar nada no outro
-        // ver essa regra com Bruno
-        if (this.respostaServicoForm.value.valorServico != '') {
+        this.respostaServicoFormat = this.cotacaoFornecedorEntity;
 
           this.loading = this.loadingCtrl.create({
             content: 'Aguarde...',
           });
           this.loading.present();
 
-          this.cotacaoFornecedorEntity = this.respostaServicoForm.value;
-          this.cotacaoFornecedorEntity.dataEntrega = this.dataEntregaServidor;
-          this.cotacaoFornecedorEntity.validadeOrcamento = this.validadeOrcamentoServidor;
-          this.cotacaoFornecedorEntity.idCotacao = this.idCotacao;
+          this.respostaServicoFormat = this.respostaServicoForm.value;
+          this.respostaServicoFormat.dataEntrega = this.dataEntregaServidor;
+          this.respostaServicoFormat.validadeOrcamento = this.validadeOrcamentoServidor;
+          this.respostaServicoFormat.idCotacao = this.idCotacao;
+
           this.listServicoResposta[0].idServicoCotacao = this.listServicoResposta[0].idServicoCotacao;
-          this.respostaServicoForm.value.valorServico = this.respostaServicoForm.value.valorServico.replace(".", "");
-          this.respostaServicoForm.value.valorServico = this.respostaServicoForm.value.valorServico.replace(",", ".");
+          this.respostaServicoForm.value.valorServico = this.respostaServicoForm.value.valorServico.replace(",", "");
           
           this.listServicoResposta[0].valorServico = this.respostaServicoForm.value.valorServico;
           this.listServicoResposta[0].observacaoServicoCotacao = this.respostaServicoForm.value.observacaoServicoCotacao;
           
-          this.cotacaoFornecedorEntity.listServicoCotacaoFornecedorEntity = this.listServicoResposta;
+          this.respostaServicoFormat.listServicoCotacaoFornecedorEntity = this.listServicoResposta;
           
-          // retirar isso aqui depois
-          // this.dataEntregaServidor = 1531501054000;
-          // this.validadeOrcamentoServidor = 1531501054000;
-          this.cotacaoFornecedorEntity.dataEntrega = this.dataEntregaServidor;
-          this.cotacaoFornecedorEntity.validadeOrcamento = this.validadeOrcamentoServidor;
-
             this.cotacaoService
-            .confirmarPedido(this.cotacaoFornecedorEntity)
+            .confirmarPedido(this.respostaServicoFormat)
             .then((cotacaoFornecedorEntityResult: CotacaoFornecedorEntity) => {
 
               this.loading.dismiss();
@@ -243,9 +216,9 @@ export class OrcamentoFornecedorDetalhePage {
                 buttons: ['OK']
               }).present();
             });
-        } else {
-          this.showAlert();
-        }
+        // } else {
+        //   this.showAlert();
+        // }
       } else {
         Object.keys(this.respostaServicoForm.controls).forEach(campo => {
           const controle = this.respostaServicoForm.get(campo);
@@ -295,6 +268,59 @@ export class OrcamentoFornecedorDetalhePage {
       .then((orcamentoFornecedorEntityResult: CotacaoFornecedorEntity) => {
         this.loading.dismiss();
         this.myToast = 'O orçamento foi rejeitado!';
+        this.presentToast();
+        setTimeout(() => {
+          this.navCtrl.setRoot(HomePage);
+        }, 3000);
+      }, (err) => {
+        this.loading.dismiss();
+        this.alertCtrl.create({
+          subTitle: err.message,
+          buttons: ['OK']
+        }).present();
+      });
+    } catch (err){
+      if(err instanceof RangeError){
+        console.log('out of range');
+      }
+      console.log(err);
+    }
+  }
+
+  concluirCotacaoConfirm() {
+    let confirm = this.alertCtrl.create({
+      title: 'Concluir orçamento',
+      message: 'Deseja realmente concluir este orçamento?',
+      buttons: [
+        {
+          text: 'NÃO',
+          handler: () => {
+          }
+        },
+        {
+          text: 'CONCLUIR',
+          handler: () => {
+            this.concluirCotacao();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  concluirCotacao() {
+    try {
+      this.loading = this.loadingCtrl.create({
+        content: 'Aguarde...',
+      });
+      this.loading.present();
+
+      this.cotacaoEntity.idCotacao = this.idCotacao;
+      this.cotacaoService
+      .concluirCotacao(this.cotacaoEntity)
+      .then((cotacaoEntityResult: CotacaoEntity) => {
+        this.loading.dismiss();
+        this.myToast = 'O orçamento foi concluído!';
         this.presentToast();
         setTimeout(() => {
           this.navCtrl.setRoot(HomePage);

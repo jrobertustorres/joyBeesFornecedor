@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Constants } from '../../app/constants';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 
 //SERVICES
@@ -21,8 +20,7 @@ export class OrcamentosListByStatusPage {
   private status: string;
   private cotacoesList: any;
   private cotacaoEntity: CotacaoEntity;
-  private aux = [];
-  public qtdTicketFornecedor: string;
+  private refresh: boolean = false;
 
   constructor(public navCtrl: NavController,
               public alertCtrl: AlertController,
@@ -35,28 +33,42 @@ export class OrcamentosListByStatusPage {
   
   ngOnInit() {
     this.findOrcamentosListByStatus();
-    this.qtdTicketFornecedor = localStorage.getItem(Constants.QTD_TICKET_FORNECEDOR);
   }
 
   ionViewDidLoad() {
   }
 
+  loadMore(infiniteScroll) {
+    
+    setTimeout(() => {
+
+      this.findOrcamentosListByStatus();
+      infiniteScroll.complete();
+    }, 500);
+  }
+
   findOrcamentosListByStatus() {
     try {
-      this.loading = this.loadingCtrl.create({
-        content: 'Aguarde...',
-      });
-      this.loading.present();
+      this.cotacaoEntity.limiteDados = this.cotacaoEntity.limiteDados ? this.cotacoesList.length : null;
+
+      if(this.refresh == false) {
+        this.loading = this.loadingCtrl.create({
+          content: 'Aguarde...',
+        });
+        this.loading.present();
+      }
 
       this.cotacaoEntity.statusCotacaoEnum = this.status;
 
       this.cockpitCotacaoService.findCotacaoFornecedorByStatus(this.cotacaoEntity)
       .then((cotacaoServiceResult: CotacaoEntity) => {
         this.cotacoesList = cotacaoServiceResult;
+        this.cotacaoEntity.limiteDados = this.cotacoesList.length;
 
-        this.loading.dismiss();
+        this.refresh = true;
+        this.loading ? this.loading.dismiss() : '';
       }, (err) => {
-        this.loading.dismiss();
+        this.loading ? this.loading.dismiss() : '';
         this.alertCtrl.create({
           subTitle: err.message,
           buttons: ['OK']
@@ -70,42 +82,29 @@ export class OrcamentosListByStatusPage {
     }
   }
 
-  getItems(searchbar) {
-    let q = searchbar.srcElement.value;
-    if (!q) {
-      this.findOrcamentosListByStatus();
-    }
-    this.aux = this.aux.length == 0 ? this.cotacoesList : this.aux; 
+  // getItems(searchbar) {
+  //   let q = searchbar.srcElement.value;
+  //   if (!q) {
+  //     this.findOrcamentosListByStatus();
+  //   }
+  //   this.aux = this.aux.length == 0 ? this.cotacoesList : this.aux; 
 
-    if(this.cotacoesList.length == 0) {
-      this.cotacoesList = this.aux;
-    }
+  //   if(this.cotacoesList.length == 0) {
+  //     this.cotacoesList = this.aux;
+  //   }
   
-    this.cotacoesList = this.cotacoesList.filter((v) => {
-      if(v.idOrcamentoFormat && v.dataCadastroFormat && q) {
-        if ((v.idOrcamentoFormat.toLowerCase().indexOf(q.toLowerCase()) && v.dataCadastroFormat.toLowerCase().indexOf(q.toLowerCase())) > -1) {
-          return true;
-        }
-        return false;
-      }
-    });
-  }
+  //   this.cotacoesList = this.cotacoesList.filter((v) => {
+  //     if(v.idOrcamentoFormat && v.dataCadastroFormat && q) {
+  //       if ((v.idOrcamentoFormat.toLowerCase().indexOf(q.toLowerCase()) && v.dataCadastroFormat.toLowerCase().indexOf(q.toLowerCase())) > -1) {
+  //         return true;
+  //       }
+  //       return false;
+  //     }
+  //   });
+  // }
 
   openDetalhaCotacao(idCotacao, statusCotacao) {
-    // if(this.qtdTicketFornecedor == '0' && statusCotacao == 'ABERTO') {
-    //   this.alertTicket();
-    // } else {
-      this.navCtrl.push(OrcamentoFornecedorDetalhePage, {idCotacao: idCotacao, statusCotacao: statusCotacao});
-    // }
+    this.navCtrl.push(OrcamentoFornecedorDetalhePage, {idCotacao: idCotacao, statusCotacao: statusCotacao});
   }
-
-  // alertTicket() {
-  //   const alert = this.alertCtrl.create({
-  //     title: 'Tickets insuficientes!',
-  //     subTitle: 'Você não possui tickets suficientes para ver este orçamento!',
-  //     buttons: ['OK']
-  //   });
-  //   alert.present();
-  // }
 
 }

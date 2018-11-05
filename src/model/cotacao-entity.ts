@@ -11,9 +11,10 @@ export class CotacaoEntity {
 	//CAMPOS DO FORNECEDOR
   public statusCotacaoEnum: string;
   public nomeCliente: string;
-  public placaMarca: string;
   public idOrcamentoFormat: string;
   public dataCadastroFormat: string;
+
+  public limiteDados: number;
 
   constructor(){
   }

@@ -1,0 +1,32 @@
+<ion-content padding style="background-color: #2C2E32">
+
+    <div class="div-style-logo">
+        <img src="assets/imgs/logo.png" class="logo-style">
+        <span class="span-fornecedor">FORNECEDOR</span>
+    </div>
+    <div class="div-home-text">
+        <span style="text-align: center; ">Conectando você a seus clientes</span>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="submeterLogin()">
+
+        <ion-item style="background: #2C2E32">
+            <ion-label stacked color="arrow-color">E-mail</ion-label>
+            <ion-input formControlName="login" type="email" placeholder="Ex.: nome@email.com" spellcheck="false" autocapitalize="off" style="color: #fff;"></ion-input>
+        </ion-item>
+        <div *ngIf="(!loginForm.get('login').valid && loginForm.get('login').touched) && !loginForm.get('login').hasError('pattern')" [ngClass]="'class-error-form-login'">campo obrigatório</div>
+        <div *ngIf="loginForm.get('login').hasError('pattern')" [ngClass]="'class-error-form-login'">e-mail inválido</div>
+
+        <ion-item style="background: #2C2E32">
+            <ion-label stacked color="arrow-color">Senha</ion-label>
+            <ion-input formControlName="senha" type="password" placeholder="Digite sua senha" style="color: #fff;"></ion-input>
+        </ion-item>
+        <div *ngIf="!loginForm.get('senha').valid && loginForm.get('senha').touched" [ngClass]="'class-error-form-login'">campo obrigatório</div>
+
+        <button ion-button block type="submit" color="navbarColor" class="margin-button-save" style="color: #000;"><span style="color: #FDB313">ENTRAR</span></button>
+    </form>
+    <div class="forgot-pass-style-div">
+        <a (click)="goRecuperarSenha()" style="color: #fff" class="botao01">Esqueci minha senha</a>
+    </div>
+
+</ion-content>

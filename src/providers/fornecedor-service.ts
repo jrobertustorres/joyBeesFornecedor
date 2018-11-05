@@ -41,8 +41,6 @@ export class FornecedorService {
             localStorage.getItem(Constants.TOKEN_USUARIO), JSON.stringify(fornecedorEntity), this.options)
               .subscribe(data => {
                 resolve(data);
-                // this.userChangeEvent.emit(usuarioEntity.nomePessoa);
-                // this.emailPessoaChangeEvent.emit(usuarioEntity.emailUsuario);
               }, (err) => {
                 reject(err.json());
               });

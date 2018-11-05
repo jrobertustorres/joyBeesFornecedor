@@ -8,7 +8,6 @@ import { Constants } from '../app/constants';
 export class CotacaoService {
   private headers = new Headers({ 'Content-Type': 'application/json' });
   private options = new RequestOptions({ headers: this.headers, method: "post" });
-//   private usuarioEntity: UsuarioEntity;
 
   constructor(public _http: Http) {
   }
@@ -30,12 +29,29 @@ export class CotacaoService {
     }
   }
 
-  public rejeitarPedido (cotacaoFornecedorEntity) {
+  public rejeitarPedido(cotacaoFornecedorEntity) {
     try {
 
       return this._http.post(Constants.API_URL + 'rejeitarPedido/'
         + localStorage.getItem(Constants.TOKEN_USUARIO),
         JSON.stringify(cotacaoFornecedorEntity), this.options)
+        .map(res => res.json())
+        .toPromise()
+        .catch();
+
+    } catch (e){
+      if(e instanceof RangeError){
+        console.log('out of range');
+      }
+    }
+  }
+
+  public concluirCotacao(CotacaoEntity) {
+    try {
+
+      return this._http.post(Constants.API_URL + 'concluirCotacao/'
+        + localStorage.getItem(Constants.TOKEN_USUARIO),
+        JSON.stringify(CotacaoEntity), this.options)
         .map(res => res.json())
         .toPromise()
         .catch();

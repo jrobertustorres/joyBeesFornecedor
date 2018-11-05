@@ -19,7 +19,7 @@ export class UsuarioService {
 
   public atualizaSenhaUsuario(usuarioEntity) {
       try {
-  
+
         return new Promise((resolve, reject) => {
           this._http.post(Constants.API_URL + 'alteraSenhaUsuario/'+
           localStorage.getItem(Constants.TOKEN_USUARIO), JSON.stringify(usuarioEntity), this.options)
@@ -29,7 +29,7 @@ export class UsuarioService {
               reject(err.json());
             });
         });
-  
+
       } catch (e){
         if(e instanceof RangeError){
           console.log('out of range');
@@ -40,7 +40,6 @@ export class UsuarioService {
   public recuperasenhaService(usuarioEntity) {
     try {
 
-      // this.usuarioEntity = new UsuarioEntity();
       return new Promise((resolve, reject) => {
         this._http.post(Constants.API_URL + 'recuperaSenha/', JSON.stringify(usuarioEntity), this.options)
           .map(function (res) { return res.json(); })

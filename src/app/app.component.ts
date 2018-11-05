@@ -19,8 +19,8 @@ export class MyApp {
   @ViewChild('baseNav') nav: Nav;
   rootPage:any;
 
-  constructor(public platform: Platform, 
-              public statusBar: StatusBar, 
+  constructor(public platform: Platform,
+              public statusBar: StatusBar,
               public splashScreen: SplashScreen,
               public alertCtrl: AlertController,
               public push: Push,
@@ -105,7 +105,7 @@ export class MyApp {
         confirmAlert.present();
       } else {
         this.nav.push(HomePage);
-        console.log('Push notification clicked');
+        //console.log('Push notification clicked');
       }
     });
 
@@ -113,7 +113,7 @@ export class MyApp {
   }
 
   checkNetwork() {
-    
+
       if(this.network.type === 'none') {
         let alert = this.alertCtrl.create({
         title: 'Você está offline',

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { Http, Headers, RequestOptions } from '@angular/http';
 import { Constants } from '../app/constants';
@@ -7,6 +7,7 @@ import { Constants } from '../app/constants';
 export class CockpitCotacaoService {
   private headers = new Headers({ 'Content-Type': 'application/json' });
   private options = new RequestOptions({ headers: this.headers, method: "post" });
+  public qtdTicketChangeEvent = new EventEmitter();
 
   constructor(public _http: Http) {
   }
@@ -47,12 +48,16 @@ export class CockpitCotacaoService {
 
   public detalhaCotacaoFornecedorByIdCotacao(cotacaoFornecedorEntity) {
     try {
-  
+
       return new Promise((resolve, reject) => {
         this._http.post(Constants.API_URL + 'detalhaCotacaoFornecedorByIdCotacao/'+
         localStorage.getItem(Constants.TOKEN_USUARIO), JSON.stringify(cotacaoFornecedorEntity), this.options)
-          .subscribe(data => {
-            resolve(data.json());
+        .map(res=>res.json())
+        .subscribe(data => {
+          resolve(data);
+          //.subscribe(data => {
+            //resolve(data.json());
+            this.qtdTicketChangeEvent.emit(data.qtdTicketFornecedor);
           }, (err) => {
             reject(err.json());
           });

@@ -7,11 +7,6 @@
         <ion-title>
             Orç. {{ status | lowercase}}s
         </ion-title>
-        <ion-buttons end *ngIf="cotacoesList?.length > 0">
-            <button ion-button icon-only (click)="showFilter = !showFilter">
-                <ion-icon ios="ios-search" md="md-search"></ion-icon>
-            </button>
-        </ion-buttons>
     </ion-navbar>
 
 </ion-header>
@@ -29,9 +24,15 @@
     <ion-list>
         <button ion-item *ngFor="let cotacao of cotacoesList" (click)="openDetalhaCotacao(cotacao.idCotacao, cotacao.statusCotacaoEnum)">
           <h4 style="color: #66667D;">Nr. Orçamento: <strong>{{ cotacao.idOrcamentoFormat }}</strong></h4>
+          <h4 style="color: #66667D;">Serviço: <strong>{{ cotacao.nomeServico }}</strong></h4>
           <h4 style="color: #66667D;">Aberto em: {{ cotacao.dataCadastroFormat }}</h4>
-          <h4 *ngIf="cotacao.statusCotacaoEnum != 'ABERTO'"  style="color: #66667D;">Respondido em: {{ cotacao.dataRespostaFormat }}</h4>
+          <h4 *ngIf="cotacao.statusCotacaoEnum != 'ABERTO' && cotacao.statusCotacaoEnum != 'CONCLUIDO'"  style="color: #66667D;">Respondido em: {{ cotacao.dataRespostaFormat }}</h4>
+          <h4 *ngIf="cotacao.statusCotacaoEnum == 'CONCLUIDO'"  style="color: #66667D;">Concluído em: {{ cotacao.dataConcluidaFormat }}</h4>
         </button>
     </ion-list>
+
+    <ion-infinite-scroll (ionInfinite)="loadMore($event)">
+        <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
 </ion-content>

@@ -11,6 +11,9 @@ export class CotacaoFornecedorEntity {
 
   public nomeCidadeUsuario: string;
   public nomeEstadoUsuario: string;
+  public endereco: string;
+  public nomeResidencia: string;
+  public cepUsuario: string;
 
   public qtdTicketFornecedor: number;
 
@@ -20,11 +23,15 @@ export class CotacaoFornecedorEntity {
   public dataSolicitacaoFormat: string;
   public statusCotacaoEnum: string;
   public dataRespostaFormat: string;
+  public dataEscolhidaFormat: string;
+  public dataConcluidaFormat: string;
 
   public tipoPagamento: string;
   public dataEntrega: Date;
 
   public dataEntregaFormat: string;
+  public qtdCotacao: number;
+  public dataCadastroFormat: string;
 
   public listServicoCotacaoFornecedorEntity: ServicoCotacaoFornecedorEntity[] = [];
 

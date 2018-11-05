@@ -32,6 +32,7 @@ import { UsuarioService } from '../providers/usuario-service';
 import { FornecedorService } from '../providers/fornecedor-service';
 import { CockpitCotacaoService } from '../providers/cockpit-cotacao-service';
 import { CotacaoService } from '../providers/cotacao-service';
+import { VersaoAppService } from '../providers/versao-app-service';
  
 //ENTITYS
 import { CockpitCotacaoEntity } from '../model/cockpit-cotacao-entity';
@@ -40,6 +41,7 @@ import { CotacaoEntity } from '../model/cotacao-entity';
 import { CotacaoFornecedorEntity } from '../model/cotacao-fornecedor-entity';
 import { ServicoCotacaoFornecedorEntity } from '../model/servico-cotacao-fornecedor-entity';
 import { FornecedorEntity } from '../model/fornecedor-entity';
+import { VersaoAppEntity } from '../model/versao-app-entity';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -101,14 +103,16 @@ import { HttpClientModule } from '@angular/common/http';
     LoginService,
     UsuarioService,
     CockpitCotacaoService,
+    VersaoAppService,
+    CotacaoService,
+    FornecedorService,
     CockpitCotacaoEntity,
     UsuarioEntity,
     CotacaoEntity,
     CotacaoFornecedorEntity,
     ServicoCotacaoFornecedorEntity,
     FornecedorEntity,
-    CotacaoService,
-    FornecedorService,
+    VersaoAppEntity,
     DatePicker,
     Push,
     Network,

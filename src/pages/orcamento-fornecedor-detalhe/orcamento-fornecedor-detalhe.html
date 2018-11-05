@@ -12,196 +12,199 @@
 </ion-header>
 
 <ion-content>
-    <div padding *ngIf="cotacaoFornecedorEntity.nomeUsuario">
-        <p class="h2-color-cards" *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'ESCOLHIDO'">
-            <strong>Parabéns! Seu orçamento foi escolhido pelo cliente.</strong>
-        </p>
 
-        <span style="font-size: 14px;">Orçamento: <b>{{ cotacaoFornecedorEntity.idOrcamentoFormat }}</b></span>
-        <span *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum != 'ABERTO'" style="font-size: 14px;">Respondido em: {{ cotacaoFornecedorEntity.dataRespostaFormat }}</span>
-    </div>
-    <div *ngIf="cotacaoFornecedorEntity.nomeUsuario" style="margin-bottom: 70px;">
+    <div *ngIf="cotacaoFornecedorEntity.nomeUsuario" style="margin-bottom: 60px;">
+        <div padding>
+            <p class="h2-color-cards" *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'ABERTO'" style="text-align: center;">
+                <strong style="color: blue">Por favor, responda ao orçamento abaixo</strong>
+            </p>
+            <p class="h2-color-cards" *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'RESPONDIDO'" style="text-align: center;">
+                <strong style="color: blue">Aguardando análise do cliente</strong>
+            </p>
+            <p class="h2-color-cards" *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'ESCOLHIDO'" style="text-align: center;">
+                <strong style="color: #228B22;">Parabéns! Seu orçamento foi escolhido<br> pelo cliente.</strong><br>
+                <strong style="color: #555;">Ao entregar o serviço, conclua o orçamento para que o cliente possa avaliá-lo</strong>
+            </p>
+            <p class="h2-color-cards" *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'CONCLUIDO'" style="text-align: center;">
+                <strong style="color: blue">Você concluiu este orçamento<br> em {{ cotacaoFornecedorEntity.dataConcluidaFormat }}</strong>
+            </p>
+            <hr style="border-top: 1px solid #999;">
 
-        <div *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'ESCOLHIDO' || cotacaoFornecedorEntity.statusCotacaoEnum == 'CONCLUIDO'">
-            <ion-item-divider class="item-divider-style" style="margin-top: 0px;">
-                <b style="color: #000; font-size: 14px;">Dados do cliente</b>
-                <div item-content>
-                    <ion-icon ios="ios-person" md="md-person" item-start style="color: #000"></ion-icon>
+            <p style="margin-top: 10px;">
+                <span style="font-size: 14px;">Orçamento: <b>{{ cotacaoFornecedorEntity.idOrcamentoFormat }}</b></span>
+            </p>
+
+            <p>Aberto em: {{ cotacaoFornecedorEntity.dataCadastroFormat }}</p>
+            <p>
+                <span *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum != 'ABERTO'" style="font-size: 14px;">Respondido em: {{ cotacaoFornecedorEntity.dataRespostaFormat }}</span>
+            </p>
+            <p *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'ESCOLHIDO'">Escolhido em: {{ cotacaoFornecedorEntity.dataEscolhidaFormat }}</p>
+
+            <div *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'ABERTO' || cotacaoFornecedorEntity.statusCotacaoEnum == 'RESPONDIDO'">
+                <div class="div-style-regiao">
+                    <b style="color: #000; font-size: 14px;">Região do cliente </b>
                 </div>
-            </ion-item-divider>
-
-            <div padding style="margin-top: -14px;">
-                <p>Nome: {{ cotacaoFornecedorEntity.nomeUsuario }}</p>
-                <p>E-mail: {{ cotacaoFornecedorEntity.emailUsuario }}</p>
-
-                <ion-grid>
-                    <ion-row>
-                        <ion-col col-6 style="margin-left: -20px;">
-                            <a ion-button clear item-end href="tel:+{{ cotacaoFornecedorEntity.telefone }}" class="a-style-button-phone">
-                                <ion-chip style="width: 150px;">
-                                    <ion-icon ios="ios-call" md="md-call"></ion-icon>
-                                    <ion-label><b> {{ cotacaoFornecedorEntity.telefone }} </b></ion-label>
-                                </ion-chip>
-                            </a>
-
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-col col-6 style="margin-left: -20px;" *ngIf="cotacaoFornecedorEntity.telefone2">
-                            <a ion-button clear item-end href="tel:+{{ cotacaoFornecedorEntity.telefone2 }}" class="a-style-button-phone">
-                                <ion-chip style="width: 150px;">
-                                    <ion-icon ios="ios-call" md="md-call"></ion-icon>
-                                    <ion-label><b> {{ cotacaoFornecedorEntity.telefone2 }} </b></ion-label>
-                                </ion-chip>
-                            </a>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-
-                <p>Data solicitação: {{ cotacaoFornecedorEntity.dataSolicitacaoFormat }}</p>
-
+                <p>Prefeitura: {{ cotacaoFornecedorEntity.nomeEstadoUsuario }}</p>
+                <p>Cidade: {{ cotacaoFornecedorEntity.nomeCidadeUsuario }}</p>
             </div>
+
+            <hr style="border-top: 1px solid #999;">
         </div>
 
-        <p>Prefeitura: {{ cotacaoFornecedorEntity.nomeEstadoUsuario }}</p>
-        <p>Cidade: {{ cotacaoFornecedorEntity.nomeCidadeUsuario }}</p>
+        <div padding *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'ESCOLHIDO' || cotacaoFornecedorEntity.statusCotacaoEnum == 'CONCLUIDO'">
+            <p class="h2-color-cards" style="margin-top: -20px; margin-bottom: 30px;">
+                <b style="color: #000; font-size: 14px;">Dados do cliente</b>
+            </p>
 
-        <form [formGroup]="respostaServicoForm" style="margin-top: -15px;">
+            <div>
+                <div style="margin-top: -14px;">
+                    <p>Nome: {{ cotacaoFornecedorEntity.nomeUsuario }}</p>
+                    <p>E-mail: {{ cotacaoFornecedorEntity.emailUsuario }}</p>
 
-            <ion-item-divider class="item-divider-style" style="margin-top: 10px;">
-                <b style="color: #000; font-size: 14px;">Produtos/serviços do orçamento</b>
-                <div item-content>
-                    <ion-icon ios="md-list" md="md-list" item-start style="color: #000"></ion-icon>
+                    <p>Prefeitura: {{ cotacaoFornecedorEntity.nomeEstadoUsuario }}</p>
+                    <p>Cidade: {{ cotacaoFornecedorEntity.nomeCidadeUsuario }}</p>
+                    <p>Endereço: {{ cotacaoFornecedorEntity.endereco }}</p>
+                    <p>Código postal: {{ cotacaoFornecedorEntity.cepUsuario }}</p>
+                    <p>Nome da residência: {{ cotacaoFornecedorEntity.nomeResidencia }}</p>
+
+                    <ion-grid>
+                        <ion-row>
+                            <ion-col col-6 style="margin-left: -20px;">
+                                <a ion-button clear item-end href="tel:+{{ cotacaoFornecedorEntity.telefone }}" class="a-style-button-phone">
+                                    <ion-chip style="width: 150px;">
+                                        <ion-icon ios="ios-call" md="md-call"></ion-icon>
+                                        <ion-label><b> {{ cotacaoFornecedorEntity.telefone }} </b></ion-label>
+                                    </ion-chip>
+                                </a>
+
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col col-6 style="margin-left: -20px;" *ngIf="cotacaoFornecedorEntity.telefone2">
+                                <a ion-button clear item-end href="tel:+{{ cotacaoFornecedorEntity.telefone2 }}" class="a-style-button-phone">
+                                    <ion-chip style="width: 150px;">
+                                        <ion-icon ios="ios-call" md="md-call"></ion-icon>
+                                        <ion-label><b> {{ cotacaoFornecedorEntity.telefone2 }} </b></ion-label>
+                                    </ion-chip>
+                                </a>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+
+                    <hr style="border-top: 1px solid #999;">
+
                 </div>
-            </ion-item-divider>
+            </div>
 
-            <!-- <form [formGroup]="respostaServicoForm"> -->
+        </div>
 
-            <ion-list class="accordion-list" style="background: #fff;">
-                <!-- First Level -->
-                <ion-list-header *ngFor="let item of listServicoResposta; let i = index" no-lines no-padding>
-                    <!-- Toggle Button -->
-                    <button ion-item (click)="toggleSection(i)" detail-none [ngClass]="{'section-active': item.open, 'section': !item.open}">
-                        <ion-icon item-left name="add" *ngIf="!item.open"></ion-icon>
-                        <ion-icon item-left name="close" *ngIf="item.open"></ion-icon>
-                        <span style="font-size: 14px;">{{ item.nomeServico }}</span>
-                    </button>
+        <div padding *ngFor="let list of listServicoResposta" style="margin-top: -40px;">
+            <p class="h2-color-cards">
+                <b style="color: #000; font-size: 14px;">Produto/serviço do orçamento</b>
+            </p>
+            <p>Produto/Serviço: <span style="color: #228B22"><b>{{ list.nomeServico }}</b></span></p>
+            <p>Quantidade: {{ cotacaoFornecedorEntity.qtdCotacao }}</p>
+            <p>Data para entrega: {{ cotacaoFornecedorEntity.dataSolicitacaoFormat }}</p>
+            <p>Observação do cliente: {{ list.descricaoServicoCotacao }}</p>
 
-                    <ion-list *ngIf="item.nomeServico && item.open" no-lines>
-                        <ion-list-header *ngFor="let child of listServicoResposta; let j = index" no-padding text-wrap>
-                            <button ion-item *ngIf="listServicoResposta" class="child" detail-none>
-                                <p><b>Observação do cliente:</b></p>
-                                <p>{{ child.descricaoServicoCotacao }}</p>
-                            </button>
-
-                            <!-- <div padding *ngIf="cotacaoFornecedorEntity.idCotacao != undefined"> -->
-                            <div padding *ngIf="isReadOnly">
-                                <p>
-                                    <span style="color: #999">Valor: </span>
-                                </p>
-                                <p>
-                                    <span style="color: #000"> {{ child.valorServicoFormat }}</span>
-                                </p>
-                                <hr>
-                                <p>
-                                    <span style="color: #999">Observação: </span>
-                                </p>
-                                <p>
-                                    <span style="color: #000">{{ child.observacaoServicoCotacao }}</span>
-                                </p>
-                            </div>
-
-                            <!-- <div *ngIf="cotacaoFornecedorEntity.idCotacao == undefined"> -->
-                            <div *ngIf="!isReadOnly">
-                                <ion-item *ngIf="listServicoResposta" ion-item detail-none class="child-item" text-wrap style="background-color: #fff;">
-                                    <ion-input formControlName="valorServico" style="color: #000; font-size: 14px;" [(ngModel)]="valorServico" placeholder="Digite o valor a ser cobrado" type="text" maxlength="100" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"
-                                        (keyup)="getValorServico(valorServico)"></ion-input>
-                                </ion-item>
-
-                                <ion-item *ngIf="listServicoResposta" ion-item detail-none class="child-item" text-wrap style="background-color: #fff;">
-                                    <ion-textarea formControlName="observacaoServicoCotacao" rows="5" style="color: #000; font-size: 14px;" [(ngModel)]="value" type="text" placeholder="Digite o que achar necessário" maxlength="200" spellcheck="false" autocapitalize="off" autocomplete="off"
-                                        autocorrect="off"></ion-textarea>
-                                </ion-item>
-                            </div>
-
-                        </ion-list-header>
-                    </ion-list>
-
-                </ion-list-header>
-            </ion-list>
-
-            <ion-item-divider class="item-divider-style" style="margin-top: 0px;">
-                <b style="color: #000; font-size: 14px;">Informe mais alguns dados</b>
-                <div item-content>
-                    <ion-icon ios="ios-create" md="md-create" item-start style="color: #000"></ion-icon>
-                </div>
-            </ion-item-divider>
-
-            <ion-item (click)="selecionaDataEntrega()" class="margin-ion-item" *ngIf="!isReadOnly">
-                <ion-label stacked style="color: #484848">Data da entrega*</ion-label>
-                <ion-datetime formControlName="dataEntrega" color="dark" name="dataEntrega" displayFormat="DD/MM/YYYY" [(ngModel)]="dataEntrega" style="color: #000"></ion-datetime>
-            </ion-item>
-            <div *ngIf="!respostaServicoForm.get('dataEntrega').valid && respostaServicoForm.get('dataEntrega').touched && !dataEntrega" [ngClass]="'class-error-form'">campo obrigatório</div>
-
-            <ion-item (click)="selecionaDataValidadeOrcamento()" class="margin-ion-item" *ngIf="!isReadOnly">
-                <ion-label stacked style="color: #484848">Validade orçamento*</ion-label>
-                <ion-datetime formControlName="validadeOrcamento" color="dark" name="validadeOrcamento" displayFormat="DD/MM/YYYY" [(ngModel)]="validadeOrcamento" style="color: #000"></ion-datetime>
-            </ion-item>
-            <div *ngIf="!respostaServicoForm.get('validadeOrcamento').valid && respostaServicoForm.get('validadeOrcamento').touched && !validadeOrcamento" [ngClass]="'class-error-form'">campo obrigatório</div>
-
-            <div *ngIf="isReadOnly" style="padding-left: 17px;">
+            <div *ngIf="isReadOnly">
                 <p>
-                    <span style="color: #999; font-size: 1.2rem;">Data da entrega </span>
+                    <span style="color: #999">Valor: </span>
+                </p>
+                <p>
+                    <span style="color: #000"> ¥{{ list.valorServicoFormat }}</span>
+                </p>
+                <hr>
+
+                <p>
+                    <span style="color: #999;">Data da entrega </span>
                 </p>
                 <p>
                     <span style="color: #000">{{ cotacaoFornecedorEntity.dataEntregaFormat }}</span>
                 </p>
 
                 <p>
-                    <span style="color: #999; font-size: 1.2rem;">Validade orçamento </span>
+                    <span style="color: #999;">Validade orçamento </span>
                 </p>
                 <p>
                     <span style="color: #000">{{ cotacaoFornecedorEntity.validadeOrcamentoFormat }}</span>
                 </p>
 
                 <p>
-                    <span style="color: #999; font-size: 1.2rem;">Tipo de pagamento </span>
+                    <span style="color: #999;">Tipo de pagamento </span>
                 </p>
                 <p>
                     <span style="color: #000">{{ cotacaoFornecedorEntity.tipoPagamento }}</span>
                 </p>
-                <hr>
-                <!-- <p>
-                    <span style="color: #999; font-size: 1.2rem;">Prazo de pagamento* </span>
+                <p>
+                    <span style="color: #999">Observação: </span>
                 </p>
                 <p>
-                    <span style="color: #000">{{ cotacaoFornecedorEntity.prazoPagamento }}</span>
-                </p> -->
+                    <span style="color: #000">{{ list.observacaoServicoCotacao }}</span>
+                </p>
+                <hr>
+                <!-- <p>
+                            <span style="color: #999; font-size: 1.2rem;">Prazo de pagamento* </span>
+                        </p>
+                        <p>
+                            <span style="color: #000">{{ cotacaoFornecedorEntity.prazoPagamento }}</span>
+                        </p> -->
             </div>
+        </div>
 
-            <ion-item class="margin-ion-item" *ngIf="!isReadOnly">
-                <ion-label stacked>Tipo de pagamento*</ion-label>
-                <ion-input formControlName="tipoPagamento" style="color: #000" [(ngModel)]="cotacaoFornecedorEntity.tipoPagamento" type="text" maxlength="100" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></ion-input>
-            </ion-item>
-            <div *ngIf="!respostaServicoForm.get('tipoPagamento').valid && respostaServicoForm.get('tipoPagamento').touched" [ngClass]="'class-error-form'">campo obrigatório</div>
+        <div *ngIf="!isReadOnly && listServicoResposta">
 
-            <!-- <ion-item class="margin-ion-item" *ngIf="!isReadOnly">
-                <ion-label stacked>Prazo de pagamento*</ion-label>
-                <ion-input formControlName="prazoPagamento" style="color: #000" [(ngModel)]="cotacaoFornecedorEntity.prazoPagamento" type="text" maxlength="100" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></ion-input>
-            </ion-item>
-            <div *ngIf="!respostaServicoForm.get('prazoPagamento').valid && respostaServicoForm.get('prazoPagamento').touched" [ngClass]="'class-error-form'">campo obrigatório</div> -->
+            <form [formGroup]="respostaServicoForm" style="margin-top: -25px;">
 
+                <div padding>
+                    <hr style="border-top: 1px solid #999;">
+                </div>
 
+                <ion-card-header text-wrap style="margin-top: -20px;">
+                    <b style="color: #000; font-size: 14px;" *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'ABERTO'">Responda o orçamento nos campos abaixo</b>
+                    <b style="color: #000; font-size: 14px;" *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum != 'ABERTO'">Sua resposta</b>
+                </ion-card-header>
 
-        </form>
+                <ion-item>
+                    <ion-label stacked style="color: #000; font-size: 14px;">Valor cobrado*</ion-label>
+                    <ion-input formControlName="valorServico" style="color: #000; font-size: 14px;" [(ngModel)]="valorServico" placeholder="Digite o valor a ser cobrado" type="text" maxlength="100" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"
+                        (keyup)="getValorServico(valorServico)"></ion-input>
+                </ion-item>
+                <div *ngIf="!respostaServicoForm.get('valorServico').valid && respostaServicoForm.get('valorServico').touched" [ngClass]="'class-error-form'">campo obrigatório</div>
+
+                <ion-item (click)="selecionaDataEntrega()" class="margin-ion-item">
+                    <ion-label stacked style="color: #000; font-size: 14px;">Data da entrega*</ion-label>
+                    <ion-datetime formControlName="dataEntrega" color="dark" name="dataEntrega" displayFormat="DD/MM/YYYY" [(ngModel)]="dataEntrega" style="color: #000"></ion-datetime>
+                </ion-item>
+                <div *ngIf="!respostaServicoForm.get('dataEntrega').valid && respostaServicoForm.get('dataEntrega').touched && !dataEntrega" [ngClass]="'class-error-form'">campo obrigatório</div>
+
+                <ion-item (click)="selecionaDataValidadeOrcamento()" class="margin-ion-item">
+                    <ion-label stacked style="color: #000; font-size: 14px;">Validade orçamento*</ion-label>
+                    <ion-datetime formControlName="validadeOrcamento" color="dark" name="validadeOrcamento" displayFormat="DD/MM/YYYY" [(ngModel)]="validadeOrcamento" style="color: #000"></ion-datetime>
+                </ion-item>
+                <div *ngIf="!respostaServicoForm.get('validadeOrcamento').valid && respostaServicoForm.get('validadeOrcamento').touched && !validadeOrcamento" [ngClass]="'class-error-form'">campo obrigatório</div>
+
+                <ion-item class="margin-ion-item">
+                    <ion-label stacked style="color: #000; font-size: 14px;">Tipo de pagamento*</ion-label>
+                    <ion-input formControlName="tipoPagamento" style="color: #000;" [(ngModel)]="cotacaoFornecedorEntity.tipoPagamento" type="text" maxlength="100" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></ion-input>
+                </ion-item>
+                <div *ngIf="!respostaServicoForm.get('tipoPagamento').valid && respostaServicoForm.get('tipoPagamento').touched" [ngClass]="'class-error-form'" style="margin-bottom: 20px;">campo obrigatório</div>
+
+                <ion-item style="margin-top: 5px;">
+                    <ion-label stacked style="color: #000; font-size: 14px;">Observação</ion-label>
+                    <ion-textarea formControlName="observacaoServicoCotacao" rows="5" style="color: #000; font-size: 14px;" [(ngModel)]="value" type="text" maxlength="200" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></ion-textarea>
+                </ion-item>
+
+            </form>
+        </div>
 
     </div>
 
 </ion-content>
 
-<ion-footer *ngIf="cotacaoFornecedorEntity.nomeUsuario && !isReadOnly">
+<ion-footer *ngIf="cotacaoFornecedorEntity.nomeUsuario && !isReadOnly" style="background-color: #fff;">
     <ion-grid>
-        <ion-row>
+        <ion-row *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum != 'ESCOLHIDO'">
             <ion-col no-padding>
                 <button no-margin ion-button full icon-end color="danger" (click)="rejeitarCotacaoConfirm()">
                     <span style="font-size: 12px;">REJEITAR</span>
@@ -211,6 +214,20 @@
             <ion-col no-padding>
                 <button no-margin ion-button full icon-end color="button-save-color" (click)="aprovarCotacao()">
                     <span style="font-size: 12px;">ACEITAR SERVIÇO</span>
+                    <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
+                </button>
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>
+</ion-footer>
+
+<ion-footer *ngIf="cotacaoFornecedorEntity.nomeUsuario && isReadOnly && cotacaoFornecedorEntity.statusCotacaoEnum == 'ESCOLHIDO'" style="background-color: #fff;">
+    <ion-grid>
+        <ion-row>
+            <ion-col no-padding>
+                <button no-margin ion-button full icon-end color="button-save-color" (click)="concluirCotacaoConfirm()">
+                    <span style="font-size: 12px;">CONCLUIR</span>
                     <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
                 </button>
             </ion-col>

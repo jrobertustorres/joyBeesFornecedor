@@ -12,20 +12,23 @@ export class LoginService {
   private options = new RequestOptions({ headers: this.headers, method: "post" });
   public userChangeEvent = new EventEmitter();
   public emailPessoaChangeEvent = new EventEmitter();
+  public qtdTicketChangeEvent = new EventEmitter();
   private usuarioEntity: UsuarioEntity;
 
   constructor(public http: Http) {
+    this.usuarioEntity = new UsuarioEntity();
   }
 
   public loginFornecedorServicos(usuarioEntity) {
     try {
       
-      this.usuarioEntity = new UsuarioEntity();
+      // this.usuarioEntity = new UsuarioEntity();
       this.usuarioEntity = usuarioEntity;
       this.usuarioEntity.tokenPush = localStorage.getItem(Constants.TOKEN_PUSH);
       this.usuarioEntity.versaoApp = localStorage.getItem(Constants.VERSION_NUMBER);
       return new Promise((resolve, reject) => {
-        this.http.post(Constants.API_URL + 'loginFornecedor/', JSON.stringify(this.usuarioEntity), this.options)
+        this.http.post(Constants.API_URL + 'loginFornecedorServicos/', 
+          JSON.stringify(this.usuarioEntity), this.options)
           .map(res=>res.json())
           .subscribe(data => {
             resolve(data);
@@ -37,6 +40,7 @@ export class LoginService {
 
             this.userChangeEvent.emit(data.nomePessoa);
             this.emailPessoaChangeEvent.emit(data.email);
+            this.qtdTicketChangeEvent.emit(data.qtdTicketFornecedor);
 
           }, (err) => {
             reject(err.json());
@@ -52,13 +56,13 @@ export class LoginService {
 
   public loginByIdFornecedorServicos(usuarioEntity) {
     try {
-      this.usuarioEntity = new UsuarioEntity();
+      // this.usuarioEntity = new UsuarioEntity();
       this.usuarioEntity = usuarioEntity;
       this.usuarioEntity.tokenPush = localStorage.getItem(Constants.TOKEN_PUSH);
       this.usuarioEntity.versaoApp = localStorage.getItem(Constants.VERSION_NUMBER);
       return new Promise((resolve, reject) => {
-        this.http.post(Constants.API_URL + 'loginByIdFornecedor/', 
-          JSON.stringify(usuarioEntity), this.options)
+        this.http.post(Constants.API_URL + 'loginByIdFornecedorServicos/',
+          JSON.stringify(this.usuarioEntity), this.options)
           .map(res=>res.json())
           .subscribe(data => {
             resolve(data);
@@ -71,6 +75,7 @@ export class LoginService {
 
             this.userChangeEvent.emit(data.nomePessoa);
             this.emailPessoaChangeEvent.emit(data.email);
+            this.qtdTicketChangeEvent.emit(data.qtdTicketFornecedor);
 
           }, (err) => {
             reject(err.json());
