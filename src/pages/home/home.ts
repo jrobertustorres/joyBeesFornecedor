@@ -6,6 +6,7 @@ import { OrcamentosListByStatusPage } from '../orcamentos-list-by-status/orcamen
 
 //SEVICES
 import { CockpitCotacaoService } from '../../providers/cockpit-cotacao-service';
+import { LanguageTranslateService } from '../../providers/language-translate-service';
 
 //ENTITYS
 import { CockpitCotacaoEntity } from '../../model/cockpit-cotacao-entity';
@@ -18,17 +19,37 @@ export class HomePage {
   private loading = null;
   private cockpitCotacaoEntity: CockpitCotacaoEntity;
   private refresh: boolean = false;
+  public languageDictionary: any;
 
   constructor(public navCtrl: NavController,
               private cockpitCotacaoService: CockpitCotacaoService,
               public alertCtrl: AlertController,
+              private languageTranslateService: LanguageTranslateService,
               public loadingCtrl: LoadingController) {
     this.cockpitCotacaoEntity = new CockpitCotacaoEntity();
 
   }
 
   ngOnInit() {
-    this.getCockpitCotacaoByUsuario();
+    this.getTraducao();
+  }
+
+  getTraducao() {
+    try {
+
+      this.languageTranslateService
+      .getTranslate()
+      .subscribe(dados => {
+        this.languageDictionary = dados;
+        this.getCockpitCotacaoByUsuario();
+      });
+    }
+    catch (err){
+      if(err instanceof RangeError){
+        console.log('out of range');
+      }
+      console.log(err);
+    }
   }
 
   doRefresh(refresher) {
@@ -43,7 +64,7 @@ export class HomePage {
     try {
       if(this.refresh == false) {
         this.loading = this.loadingCtrl.create({
-          content: 'Aguarde...',
+          content: this.languageDictionary.LOADING_TEXT,
         });
         this.loading.present();
       }
@@ -72,6 +93,5 @@ export class HomePage {
   openCotacoesList(status) {
     this.navCtrl.push(OrcamentosListByStatusPage, {status: status});
   }
-
 
 }

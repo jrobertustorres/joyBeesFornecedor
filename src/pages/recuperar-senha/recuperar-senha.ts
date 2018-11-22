@@ -7,6 +7,7 @@ import { UsuarioEntity } from '../../model/usuario-entity';
 
 //SERVICES
 import { UsuarioService } from '../../providers/usuario-service';
+import { LanguageTranslateService } from '../../providers/language-translate-service';
 
 //PAGES
 import { LoginPage } from './../login/login';
@@ -22,6 +23,7 @@ export class RecuperarSenhaPage implements OnInit {
   private loading: any;
   private usuarioEntity: UsuarioEntity;
   public recuperarSenhaForm: FormGroup;
+  public languageDictionary: any;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -29,6 +31,7 @@ export class RecuperarSenhaPage implements OnInit {
               private formBuilder: FormBuilder,
               private usuarioService: UsuarioService,
               public alertCtrl: AlertController,
+              private languageTranslateService: LanguageTranslateService,
               private toastCtrl: ToastController) {
 
     this.usuarioEntity = new UsuarioEntity();
@@ -36,6 +39,7 @@ export class RecuperarSenhaPage implements OnInit {
   }
 
   ngOnInit() {
+    this.getTraducao();
     this.recuperarSenhaForm = this.formBuilder.group({
       'email': ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]]
     });
@@ -44,9 +48,26 @@ export class RecuperarSenhaPage implements OnInit {
   ionViewDidLoad() {
   }
 
+  getTraducao() {
+    try {
+
+      this.languageTranslateService
+      .getTranslate()
+      .subscribe(dados => {
+        this.languageDictionary = dados;
+      });
+    }
+    catch (err){
+      if(err instanceof RangeError){
+        console.log('out of range');
+      }
+      console.log(err);
+    }
+  }
+
   presentToast() {
     let toast = this.toastCtrl.create({
-      message: 'Um email foi enviado com a nova senha! Favor verificar.',
+      message: this.languageDictionary.TOAST_RECUPERAR_SENHA,
       duration: 3000,
       position: 'bottom',
       cssClass: "toast-success"
@@ -61,9 +82,8 @@ export class RecuperarSenhaPage implements OnInit {
   submeterRecuperarSenha() {
     try {
       if (this.recuperarSenhaForm.valid) {
-          this.loading = 'Aguarde...';
         this.loading = this.loadingCtrl.create({
-          content: this.loading,
+          content: this.languageDictionary.LOADING_TEXT,
         });
         this.loading.present();
 

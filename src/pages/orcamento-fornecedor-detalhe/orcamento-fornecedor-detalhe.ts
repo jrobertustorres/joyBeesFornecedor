@@ -13,6 +13,7 @@ import { CotacaoEntity } from './../../model/cotacao-entity';
 //SERVICES
 import { CockpitCotacaoService } from '../../providers/cockpit-cotacao-service';
 import { CotacaoService } from './../../providers/cotacao-service';
+import { LanguageTranslateService } from '../../providers/language-translate-service';
 
 //PAGES
 import { HomePage } from '../home/home';
@@ -39,6 +40,7 @@ export class OrcamentoFornecedorDetalhePage {
   public valorServico: any;
   public myToast: string;
   public respostaServicoFormat: any;
+  public languageDictionary: any;
 
   constructor(public navCtrl: NavController,
               public alertCtrl: AlertController,
@@ -50,6 +52,7 @@ export class OrcamentoFornecedorDetalhePage {
               private toastCtrl: ToastController,
               private maskMoney: MaskMoneyUtil,
               public platform: Platform,
+              private languageTranslateService: LanguageTranslateService,
               public navParams: NavParams) {
     this.cotacaoFornecedorEntity = new CotacaoFornecedorEntity;
     this.servicoCotacaoFornecedorEntity = new ServicoCotacaoFornecedorEntity;
@@ -60,7 +63,7 @@ export class OrcamentoFornecedorDetalhePage {
   }
 
   ngOnInit() {
-    this.findOrcamentosDetalhes();
+    this.getTraducao();
     this.respostaServicoForm = this.formBuilder.group({
       'valorServico': ['', [Validators.required, Validators.maxLength(100)]],
       'observacaoServicoCotacao': ['', [Validators.maxLength(200)]],
@@ -75,7 +78,22 @@ export class OrcamentoFornecedorDetalhePage {
     this.respostaServicoForm.controls.validadeOrcamento.disable();
   }
 
-  ionViewDidLoad() {
+  getTraducao() {
+    try {
+
+      this.languageTranslateService
+      .getTranslate()
+      .subscribe(dados => {
+        this.languageDictionary = dados;
+        this.findOrcamentosDetalhes();
+      });
+    }
+    catch (err){
+      if(err instanceof RangeError){
+        console.log('out of range');
+      }
+      console.log(err);
+    }
   }
 
   getValorServico(v) {
@@ -99,7 +117,7 @@ export class OrcamentoFornecedorDetalhePage {
   findOrcamentosDetalhes() {
     try {
       this.loading = this.loadingCtrl.create({
-        content: 'Aguarde...',
+        content: this.languageDictionary.LOADING_TEXT,
       });
       this.loading.present();
 
@@ -150,7 +168,7 @@ export class OrcamentoFornecedorDetalhePage {
       date: new Date(),
       mode: 'date',
       okText: 'OK',
-      cancelText: 'Cancelar',
+      cancelText: this.languageDictionary.CANCELAR,
       androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
     })
     .then(dataEntrega => {
@@ -165,7 +183,7 @@ export class OrcamentoFornecedorDetalhePage {
       date: new Date(),
       mode: 'date',
       okText: 'OK',
-      cancelText: 'Cancelar',
+      cancelText: this.languageDictionary.CANCELAR,
       androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
     })
     .then(validadeOrcamento => {
@@ -182,7 +200,7 @@ export class OrcamentoFornecedorDetalhePage {
         this.respostaServicoFormat = this.cotacaoFornecedorEntity;
 
           this.loading = this.loadingCtrl.create({
-            content: 'Aguarde...',
+            content: this.languageDictionary.LOADING_TEXT,
           });
           this.loading.present();
 
@@ -204,7 +222,7 @@ export class OrcamentoFornecedorDetalhePage {
             .then((cotacaoFornecedorEntityResult: CotacaoFornecedorEntity) => {
 
               this.loading.dismiss();
-              this.myToast = 'O orçamento foi respondido!';
+              this.myToast = this.languageDictionary.LABEL_ORCAMENTO_RESPONDIDO;
               this.presentToast();
               setTimeout(() => {
                 this.navCtrl.setRoot(HomePage);
@@ -236,16 +254,16 @@ export class OrcamentoFornecedorDetalhePage {
 
   rejeitarCotacaoConfirm() {
     let confirm = this.alertCtrl.create({
-      title: 'Rejeitar orçamento',
-      message: 'Deseja realmente rejeitar este orçamento?',
+      title: this.languageDictionary.BTN_REJEITAR_ORCAMENTO,
+      message: this.languageDictionary.SUBTITLE_REJEITAR_ORCAMENTO,
       buttons: [
         {
-          text: 'MANTER',
+          text: this.languageDictionary.BTN_MANTER,
           handler: () => {
           }
         },
         {
-          text: 'REJEITAR!',
+          text: this.languageDictionary.BTN_REJEITAR,
           handler: () => {
             this.rejeitarCotacao();
           }
@@ -258,7 +276,7 @@ export class OrcamentoFornecedorDetalhePage {
   rejeitarCotacao() {
     try {
       this.loading = this.loadingCtrl.create({
-        content: 'Aguarde...',
+        content: this.languageDictionary.LOADING_TEXT,
       });
       this.loading.present();
 
@@ -267,7 +285,7 @@ export class OrcamentoFornecedorDetalhePage {
       .rejeitarPedido(this.cotacaoFornecedorEntity)
       .then((orcamentoFornecedorEntityResult: CotacaoFornecedorEntity) => {
         this.loading.dismiss();
-        this.myToast = 'O orçamento foi rejeitado!';
+        this.myToast = this.languageDictionary.LABEL_ORCAMENTO_REJEITADO;
         this.presentToast();
         setTimeout(() => {
           this.navCtrl.setRoot(HomePage);
@@ -289,16 +307,16 @@ export class OrcamentoFornecedorDetalhePage {
 
   concluirCotacaoConfirm() {
     let confirm = this.alertCtrl.create({
-      title: 'Concluir orçamento',
-      message: 'Deseja realmente concluir este orçamento?',
+      title: this.languageDictionary.BTN_CONCLUIR_ORCAMENTO,
+      message: this.languageDictionary.SUBTITLE_CONCLUIR_ORCAMENTO,
       buttons: [
         {
-          text: 'NÃO',
+          text: this.languageDictionary.LABEL_NAO_UPPER,
           handler: () => {
           }
         },
         {
-          text: 'CONCLUIR',
+          text: this.languageDictionary.BTN_CONCLUIR,
           handler: () => {
             this.concluirCotacao();
           }
@@ -311,7 +329,7 @@ export class OrcamentoFornecedorDetalhePage {
   concluirCotacao() {
     try {
       this.loading = this.loadingCtrl.create({
-        content: 'Aguarde...',
+        content: this.languageDictionary.LOADING_TEXT,
       });
       this.loading.present();
 
@@ -320,7 +338,7 @@ export class OrcamentoFornecedorDetalhePage {
       .concluirCotacao(this.cotacaoEntity)
       .then((cotacaoEntityResult: CotacaoEntity) => {
         this.loading.dismiss();
-        this.myToast = 'O orçamento foi concluído!';
+        this.myToast = this.languageDictionary.LABEL_ORCAMENTO_CONCLUIDO;
         this.presentToast();
         setTimeout(() => {
           this.navCtrl.setRoot(HomePage);

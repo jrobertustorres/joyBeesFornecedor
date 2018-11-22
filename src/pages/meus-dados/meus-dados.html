@@ -1,7 +1,7 @@
 <ion-header>
 
     <ion-navbar color="dark">
-        <ion-title>Meus dados</ion-title>
+        <ion-title>{{ 'MEUS_DADOS' | translate }}</ion-title>
     </ion-navbar>
 
 </ion-header>
@@ -10,40 +10,40 @@
     <form [formGroup]="dadosFornecedorForm" (ngSubmit)="submeterDadosFornecedor()">
 
         <ion-item-divider class="item-divider-style" style="margin-top: 0px;">
-            <b style="color: #000">Dados pessoais</b>
+            <b style="color: #000">{{ 'DADOS_PESSOAIS' | translate }}</b>
             <div item-content>
                 <ion-icon ios="ios-person" md="md-person" item-start style="color: #000"></ion-icon>
             </div>
         </ion-item-divider>
 
         <ion-item>
-            <ion-label stacked>Nome</ion-label>
+            <ion-label stacked>{{ 'NOME' | translate }}</ion-label>
             <ion-input formControlName="nome" color="dark" [(ngModel)]="fornecedorEntity.nome" type="text" [readonly]="true" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label stacked>E-mail</ion-label>
+            <ion-label stacked>{{ 'EMAIL' | translate }}</ion-label>
             <ion-input formControlName="email" [(ngModel)]="fornecedorEntity.email" type="email" [readonly]="true"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label stacked>Telefone</ion-label>
+            <ion-label stacked>{{ 'TELEFONE' | translate }}</ion-label>
             <ion-input formControlName="telefone" [(ngModel)]="fornecedorEntity.telefone" type="text" maxlength="16"></ion-input>
         </ion-item>
-        <div *ngIf="!dadosFornecedorForm.get('telefone').valid && dadosFornecedorForm.get('telefone').touched" [ngClass]="'class-error-form'">campo obrigatório</div>
+        <div *ngIf="!dadosFornecedorForm.get('telefone').valid && dadosFornecedorForm.get('telefone').touched" [ngClass]="'class-error-form'">{{ 'CAMPO_OBRIGATORIO' | translate }}</div>
 
         <ion-item>
-            <ion-label stacked>Telefone2</ion-label>
+            <ion-label stacked>{{ 'TELEFONE' | translate }}2</ion-label>
             <ion-input formControlName="telefone2" [(ngModel)]="fornecedorEntity.telefone2" type="text" maxlength="16"></ion-input>
         </ion-item>
 
         <ion-item>
-            <ion-label stacked>Site</ion-label>
+            <ion-label stacked>{{ 'LABEL_SITE' | translate }}</ion-label>
             <ion-input formControlName="site" color="dark" [(ngModel)]="fornecedorEntity.site" type="text" maxlength="100" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></ion-input>
         </ion-item>
 
         <div padding>
-            <button ion-button block type="submit" color="navbarColor" class="margin-button-save" style="color: #000;"><span style="color: #FDB313">SALVAR</span></button>
+            <button ion-button block type="submit" color="navbarColor" class="margin-button-save" style="color: #000;"><span style="color: #FDB313">{{ 'SALVAR' | translate }}</span></button>
         </div>
     </form>
 

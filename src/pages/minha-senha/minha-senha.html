@@ -1,37 +1,34 @@
 <ion-header>
 
     <ion-navbar color="dark">
-        <ion-title>Alterar senha</ion-title>
+        <ion-title>{{ 'ALTERAR_SENHA' | translate }}</ion-title>
     </ion-navbar>
 
 </ion-header>
 
-<!-- <ion-content> -->
 <ion-content padding>
     <form [formGroup]="minhaSenhaForm" (ngSubmit)="submeterNovaSenha()">
 
         <ion-item>
-            <ion-label stacked>Senha atual</ion-label>
+            <ion-label stacked>{{ 'SENHA_ATUAL' | translate }}</ion-label>
             <ion-input formControlName="senha" id="senha" [(ngModel)]="usuarioEntity.senha" type="password"></ion-input>
         </ion-item>
-        <div *ngIf="!minhaSenhaForm.get('senha').valid && minhaSenhaForm.get('senha').touched" [ngClass]="'class-error-form'">campo obrigatório</div>
+        <div *ngIf="!minhaSenhaForm.get('senha').valid && minhaSenhaForm.get('senha').touched" [ngClass]="'class-error-form'">{{ 'CAMPO_OBRIGATORIO' | translate }}</div>
 
         <ion-item>
-            <ion-label stacked>Nova senha</ion-label>
+            <ion-label stacked>{{ 'NOVA_SENHA' | translate }}</ion-label>
             <ion-input formControlName="novaSenha" id="novaSenha" [(ngModel)]="usuarioEntity.novaSenha" type="password"></ion-input>
         </ion-item>
-        <div *ngIf="!minhaSenhaForm.get('novaSenha').valid && minhaSenhaForm.get('novaSenha').touched" [ngClass]="'class-error-form'">campo obrigatório</div>
+        <div *ngIf="!minhaSenhaForm.get('novaSenha').valid && minhaSenhaForm.get('novaSenha').touched" [ngClass]="'class-error-form'">{{ 'CAMPO_OBRIGATORIO' | translate }}</div>
 
         <ion-item>
-            <ion-label stacked>Confirmar senha</ion-label>
+            <ion-label stacked>{{ 'CONFIRMAR_SENHA' | translate }}</ion-label>
             <ion-input type="password" id="confirmSenha" formControlName="confirmSenha"></ion-input>
         </ion-item>
-        <div [ngClass]="'class-error-form'" *ngIf="(!minhaSenhaForm.get('confirmSenha').valid && minhaSenhaForm.get('confirmSenha').touched) && minhaSenhaForm.controls.confirmSenha.errors?.MatchPassword">as senhas não conferem</div>
+        <div [ngClass]="'class-error-form'" *ngIf="(!minhaSenhaForm.get('confirmSenha').valid && minhaSenhaForm.get('confirmSenha').touched) && minhaSenhaForm.controls.confirmSenha.errors?.MatchPassword">{{ 'SENHAS_NAO_CONFEREM' | translate }}</div>
 
         <div>
-            <button ion-button block type="submit" color="navbarColor" class="margin-button-save" style="color: #000;"><span style="color: #FDB313">SALVAR</span></button>
-            <!-- <button ion-button block type="submit" color="button-save-color" class="margin-button-save span-style-color">SALVAR</button> -->
-            <!-- <button ion-button block type="submit" color="navbarColor" class="margin-button-save">{{ 'SALVAR' | translate }}</button> -->
+            <button ion-button block type="submit" color="navbarColor" class="margin-button-save" style="color: #000;"><span style="color: #FDB313">{{ 'SALVAR' | translate }}</span></button>
         </div>
 
     </form>

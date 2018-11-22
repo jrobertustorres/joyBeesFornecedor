@@ -1,4 +1,4 @@
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http  } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -9,6 +9,14 @@ import { AppVersion } from '@ionic-native/app-version';
 import {MaskMoneyUtil} from '../utilitarios/maskMoney';
 
 import { MyApp } from './app.component';
+
+//PROVIDERS
+import { LanguageProvider } from '../providers/language-provider';
+
+//TRANSLATE
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { Globalization } from '@ionic-native/globalization';
 
 //PAGES
 import { HomePage } from '../pages/home/home';
@@ -33,6 +41,7 @@ import { FornecedorService } from '../providers/fornecedor-service';
 import { CockpitCotacaoService } from '../providers/cockpit-cotacao-service';
 import { CotacaoService } from '../providers/cotacao-service';
 import { VersaoAppService } from '../providers/versao-app-service';
+import { LanguageTranslateService } from '../providers/language-translate-service';
  
 //ENTITYS
 import { CockpitCotacaoEntity } from '../model/cockpit-cotacao-entity';
@@ -46,7 +55,12 @@ import { VersaoAppEntity } from '../model/versao-app-entity';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { HttpClientModule } from '@angular/common/http';
+// import { HttpClientModule, HttpClient } from '@angular/common/http';
+
+// export function createTranslateLoader(http: HttpClient) {
+export function createTranslateLoader(http: Http) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [
@@ -67,17 +81,20 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     HttpModule,
     BrowserModule,
-    HttpClientModule,
-    // IonicModule.forRoot(MyApp),
+    // HttpClientModule,
+    HttpModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [Http]
+        // deps: [HttpClient]
+      }
+    }),
     IonicModule.forRoot(MyApp, {
       backButtonText: '',
     },
   ),
-    // IonicStorageModule.forRoot({
-    //   name: 'carwappfornecedor',
-    //   storeName: 'fornecedor',
-    //   driverOrder: ['indexeddb']
-    // })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -98,6 +115,8 @@ import { HttpClientModule } from '@angular/common/http';
   providers: [
     StatusBar,
     SplashScreen,
+    LanguageProvider,
+    LanguageTranslateService,
     EstadosService,
     CidadesService,
     LoginService,
@@ -118,6 +137,7 @@ import { HttpClientModule } from '@angular/common/http';
     Network,
     AppVersion,
     MaskMoneyUtil,
+    Globalization,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

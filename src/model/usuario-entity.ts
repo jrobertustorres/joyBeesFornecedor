@@ -17,6 +17,7 @@ export class UsuarioEntity {
   // public statusAceitoTermoUso: boolean;
   public uuid: string;
   public versaoApp: string;
+  public idiomaUsuario: string;
 
   public novaSenha: string;
 

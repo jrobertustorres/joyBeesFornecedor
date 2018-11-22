@@ -10,6 +10,7 @@ import { ConfiguracoesPage } from '../configuracoes/configuracoes';
 
 // SERVICES
 import { FornecedorService } from '../../providers/fornecedor-service';
+import { LanguageTranslateService } from '../../providers/language-translate-service';
 
 @IonicPage()
 @Component({
@@ -27,6 +28,8 @@ export class MeusDadosPage implements OnInit {
   public cpfPessoa: string;
   public telefonePessoa: string;
 
+  public languageDictionary: any;
+
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               public loadingCtrl: LoadingController,
@@ -34,12 +37,14 @@ export class MeusDadosPage implements OnInit {
               private fornecedorService: FornecedorService,
               private formBuilder: FormBuilder,
               private toastCtrl: ToastController,
+              private languageTranslateService: LanguageTranslateService,
               public modalCtrl: ModalController) {
 
     this.fornecedorEntity = new FornecedorEntity();
   }
 
   ngOnInit() {
+    this.getTraducao();
 
     this.dadosFornecedorForm = this.formBuilder.group({
       'nome': ['', [Validators.required, Validators.maxLength(100)]],
@@ -49,16 +54,33 @@ export class MeusDadosPage implements OnInit {
       'site': ['', Validators.maxLength(50)]
     });
 
-    this.callGetDadosFornecedor();
   }
 
   ionViewDidLoad() {
   }
 
+  getTraducao() {
+    try {
+
+      this.languageTranslateService
+      .getTranslate()
+      .subscribe(dados => {
+        this.languageDictionary = dados;
+        this.callGetDadosFornecedor();
+      });
+    }
+    catch (err){
+      if(err instanceof RangeError){
+        console.log('out of range');
+      }
+      console.log(err);
+    }
+  }
+
   presentToast() {
     let toast = this.toastCtrl.create({
-      message: 'Cadastro atualizado!',
-      duration: 2000,
+      message: this.languageDictionary.TOAST_CADASTRO_ATUALIZADO,
+      duration: 3000,
       position: 'bottom',
       cssClass: "toast-success"
     });
@@ -72,7 +94,7 @@ export class MeusDadosPage implements OnInit {
   callGetDadosFornecedor() {
     try {
       this.loadingDados = this.loadingCtrl.create({
-        content: 'Aguarde...',
+        content: this.languageDictionary.LOADING_TEXT,
       });
       this.loadingDados.present();
 
@@ -102,7 +124,7 @@ export class MeusDadosPage implements OnInit {
 
       if (this.dadosFornecedorForm.valid) {
         this.loading = this.loadingCtrl.create({
-          content: 'Aguarde...',
+          content: this.languageDictionary.LOADING_TEXT,
         });
         this.loading.present();
 

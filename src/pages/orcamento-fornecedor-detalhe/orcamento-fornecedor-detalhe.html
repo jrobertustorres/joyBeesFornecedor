@@ -5,7 +5,7 @@
     <ion-icon name="menu"></ion-icon>
   </button>
         <ion-title>
-            Detalhes
+            {{ 'DETALHES_ORCAMENTO' | translate }}
         </ion-title>
     </ion-navbar>
 
@@ -16,56 +16,59 @@
     <div *ngIf="cotacaoFornecedorEntity.nomeUsuario" style="margin-bottom: 60px;">
         <div padding>
             <p class="h2-color-cards" *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'ABERTO'" style="text-align: center;">
-                <strong style="color: blue">Por favor, responda ao orçamento abaixo</strong>
+                <strong style="color: blue">{{ 'LABEL_RESPONDA_ORCAMENTO' | translate }}</strong>
             </p>
             <p class="h2-color-cards" *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'RESPONDIDO'" style="text-align: center;">
-                <strong style="color: blue">Aguardando análise do cliente</strong>
+                <strong style="color: blue">{{ 'LABEL_AGUARDANDO_ANALISE' | translate }}</strong>
             </p>
             <p class="h2-color-cards" *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'ESCOLHIDO'" style="text-align: center;">
-                <strong style="color: #228B22;">Parabéns! Seu orçamento foi escolhido<br> pelo cliente.</strong><br>
-                <strong style="color: #555;">Ao entregar o serviço, conclua o orçamento para que o cliente possa avaliá-lo</strong>
+                <strong style="color: #228B22;">{{ 'LABEL_PARABENS' | translate }}</strong><br>
+                <strong style="color: #555;">{{ 'LABEL_ALERTA_ENTREGA' | translate }}</strong>
             </p>
             <p class="h2-color-cards" *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'CONCLUIDO'" style="text-align: center;">
-                <strong style="color: blue">Você concluiu este orçamento<br> em {{ cotacaoFornecedorEntity.dataConcluidaFormat }}</strong>
+                <strong style="color: blue">{{ 'LABEL_ORCAMENTO_CONCLUIDO_DATA' | translate }} {{ cotacaoFornecedorEntity.dataConcluidaFormat }}</strong>
             </p>
             <hr style="border-top: 1px solid #999;">
 
             <p style="margin-top: 10px;">
-                <span style="font-size: 14px;">Orçamento: <b>{{ cotacaoFornecedorEntity.idOrcamentoFormat }}</b></span>
+                <span style="font-size: 14px;">{{ 'NUMERO_ORCAMENTO' | translate }}: <b>{{ cotacaoFornecedorEntity.idOrcamentoFormat }}</b></span>
             </p>
 
-            <p>Aberto em: {{ cotacaoFornecedorEntity.dataCadastroFormat }}</p>
+            <p>{{ 'LABEL_ABERTO_EM' | translate }}: {{ cotacaoFornecedorEntity.dataCadastroFormat }}</p>
             <p>
-                <span *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum != 'ABERTO'" style="font-size: 14px;">Respondido em: {{ cotacaoFornecedorEntity.dataRespostaFormat }}</span>
+                <span *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum != 'ABERTO'" style="font-size: 14px;">{{ 'LABEL_RESPONDIDO_EM' | translate }}: {{ cotacaoFornecedorEntity.dataRespostaFormat }}</span>
             </p>
-            <p *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'ESCOLHIDO'">Escolhido em: {{ cotacaoFornecedorEntity.dataEscolhidaFormat }}</p>
+            <p *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'ESCOLHIDO'">{{ 'LABEL_ESCOLHIDO_EM' | translate }}: {{ cotacaoFornecedorEntity.dataEscolhidaFormat }}</p>
 
             <div *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'ABERTO' || cotacaoFornecedorEntity.statusCotacaoEnum == 'RESPONDIDO'">
                 <div class="div-style-regiao">
-                    <b style="color: #000; font-size: 14px;">Região do cliente </b>
+                    <b style="color: #000; font-size: 14px;">{{ 'LABEL_REGIAO_CLIENTE' | translate }} </b>
                 </div>
-                <p>Prefeitura: {{ cotacaoFornecedorEntity.nomeEstadoUsuario }}</p>
-                <p>Cidade: {{ cotacaoFornecedorEntity.nomeCidadeUsuario }}</p>
+                <p>{{ 'PROVINCIA' | translate }}: {{ cotacaoFornecedorEntity.nomeEstadoUsuario }}</p>
+                <p>{{ 'CIDADE' | translate }}: {{ cotacaoFornecedorEntity.nomeCidadeUsuario }}</p>
             </div>
 
-            <hr style="border-top: 1px solid #999;">
+            <!-- <hr style="border-top: 1px solid #999;"> -->
         </div>
+        <hr class="hr10">
 
         <div padding *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'ESCOLHIDO' || cotacaoFornecedorEntity.statusCotacaoEnum == 'CONCLUIDO'">
-            <p class="h2-color-cards" style="margin-top: -20px; margin-bottom: 30px;">
-                <b style="color: #000; font-size: 14px;">Dados do cliente</b>
+            <p class="h2-color-cards" style="margin-top: -10px; margin-bottom: 30px;">
+                <b style="color: #000; font-size: 14px;">{{ 'LABEL_DADOS_CLIENTE' | translate }}</b>
             </p>
 
             <div>
                 <div style="margin-top: -14px;">
-                    <p>Nome: {{ cotacaoFornecedorEntity.nomeUsuario }}</p>
-                    <p>E-mail: {{ cotacaoFornecedorEntity.emailUsuario }}</p>
+                    <p>{{ 'NOME' | translate }}:</p>
+                    <P>{{ cotacaoFornecedorEntity.nomeUsuario }}</P>
+                    <p>{{ 'EMAIL' | translate }}: </p>
+                    <p>{{ cotacaoFornecedorEntity.emailUsuario }}</p>
 
-                    <p>Prefeitura: {{ cotacaoFornecedorEntity.nomeEstadoUsuario }}</p>
-                    <p>Cidade: {{ cotacaoFornecedorEntity.nomeCidadeUsuario }}</p>
-                    <p>Endereço: {{ cotacaoFornecedorEntity.endereco }}</p>
-                    <p>Código postal: {{ cotacaoFornecedorEntity.cepUsuario }}</p>
-                    <p>Nome da residência: {{ cotacaoFornecedorEntity.nomeResidencia }}</p>
+                    <p>{{ 'PROVINCIA' | translate }}: {{ cotacaoFornecedorEntity.nomeEstadoUsuario }}</p>
+                    <p>{{ 'CIDADE' | translate }}: {{ cotacaoFornecedorEntity.nomeCidadeUsuario }}</p>
+                    <p>{{ 'ENDERECO' | translate }}: {{ cotacaoFornecedorEntity.endereco }}</p>
+                    <p>{{ 'LABEL_CEP' | translate }}: {{ cotacaoFornecedorEntity.cepUsuario }}</p>
+                    <p>{{ 'LABEL_NOME_RESID' | translate }}: {{ cotacaoFornecedorEntity.nomeResidencia }}</p>
 
                     <ion-grid>
                         <ion-row>
@@ -91,25 +94,27 @@
                         </ion-row>
                     </ion-grid>
 
-                    <hr style="border-top: 1px solid #999;">
-
+                    <!-- <hr style="border-top: 1px solid #999;"> -->
+                    
                 </div>
             </div>
-
+            
         </div>
+        <hr class="hr10">
 
-        <div padding *ngFor="let list of listServicoResposta" style="margin-top: -40px;">
+        <div padding *ngFor="let list of listServicoResposta" style="margin-top: -10px;">
             <p class="h2-color-cards">
-                <b style="color: #000; font-size: 14px;">Produto/serviço do orçamento</b>
+                <b style="color: #000; font-size: 14px;">{{ 'LABEL_PRODUTO_SERVICO_ORCAMENTO' | translate }}</b>
             </p>
-            <p>Produto/Serviço: <span style="color: #228B22"><b>{{ list.nomeServico }}</b></span></p>
-            <p>Quantidade: {{ cotacaoFornecedorEntity.qtdCotacao }}</p>
-            <p>Data para entrega: {{ cotacaoFornecedorEntity.dataSolicitacaoFormat }}</p>
-            <p>Observação do cliente: {{ list.descricaoServicoCotacao }}</p>
+            <p>{{ 'LABEL_PRODUTO_SERVICO' | translate }}: <span style="color: #228B22"><b>{{ list.nomeServico }}</b></span></p>
+            <p>{{ 'QTD_SERVICO' | translate }}: {{ cotacaoFornecedorEntity.qtdCotacao }}</p>
+            <p>{{ 'LABEL_DATA_ENTREGA' | translate }}: {{ cotacaoFornecedorEntity.dataSolicitacaoFormat }}</p>
+            <p>{{ 'LABEL_OBS_CLIENTE' | translate }}:</p>
+            <p>{{ list.descricaoServicoCotacao }}</p>
 
             <div *ngIf="isReadOnly">
                 <p>
-                    <span style="color: #999">Valor: </span>
+                    <span style="color: #999">{{ 'LABEL_VALOR' | translate }}: </span>
                 </p>
                 <p>
                     <span style="color: #000"> ¥{{ list.valorServicoFormat }}</span>
@@ -117,27 +122,27 @@
                 <hr>
 
                 <p>
-                    <span style="color: #999;">Data da entrega </span>
+                    <span style="color: #999;">{{ 'DATA_ENTREGA' | translate }} </span>
                 </p>
                 <p>
                     <span style="color: #000">{{ cotacaoFornecedorEntity.dataEntregaFormat }}</span>
                 </p>
 
                 <p>
-                    <span style="color: #999;">Validade orçamento </span>
+                    <span style="color: #999;">{{ 'LABEL_VALIDADE_ORCAMENTO' | translate }} </span>
                 </p>
                 <p>
                     <span style="color: #000">{{ cotacaoFornecedorEntity.validadeOrcamentoFormat }}</span>
                 </p>
 
                 <p>
-                    <span style="color: #999;">Tipo de pagamento </span>
+                    <span style="color: #999;">{{ 'TIPO_PAGAMENTO' | translate }} </span>
                 </p>
                 <p>
                     <span style="color: #000">{{ cotacaoFornecedorEntity.tipoPagamento }}</span>
                 </p>
                 <p>
-                    <span style="color: #999">Observação: </span>
+                    <span style="color: #999">{{ 'OBSERVACAO' | translate }}: </span>
                 </p>
                 <p>
                     <span style="color: #000">{{ list.observacaoServicoCotacao }}</span>
@@ -161,37 +166,37 @@
                 </div>
 
                 <ion-card-header text-wrap style="margin-top: -20px;">
-                    <b style="color: #000; font-size: 14px;" *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'ABERTO'">Responda o orçamento nos campos abaixo</b>
-                    <b style="color: #000; font-size: 14px;" *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum != 'ABERTO'">Sua resposta</b>
+                    <b style="color: #000; font-size: 14px;" *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum == 'ABERTO'">{{ 'LABEL_RESPONDA_ORCAMENTO_ABAIXO' | translate }}</b>
+                    <b style="color: #000; font-size: 14px;" *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum != 'ABERTO'">{{ 'LABEL_SUA_RESPOSTA' | translate }}</b>
                 </ion-card-header>
 
                 <ion-item>
-                    <ion-label stacked style="color: #000; font-size: 14px;">Valor cobrado*</ion-label>
+                    <ion-label stacked style="color: #000; font-size: 14px;">{{ 'LABEL_VALOR_COBRADO' | translate }}*</ion-label>
                     <ion-input formControlName="valorServico" style="color: #000; font-size: 14px;" [(ngModel)]="valorServico" placeholder="Digite o valor a ser cobrado" type="text" maxlength="100" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"
                         (keyup)="getValorServico(valorServico)"></ion-input>
                 </ion-item>
-                <div *ngIf="!respostaServicoForm.get('valorServico').valid && respostaServicoForm.get('valorServico').touched" [ngClass]="'class-error-form'">campo obrigatório</div>
+                <div *ngIf="!respostaServicoForm.get('valorServico').valid && respostaServicoForm.get('valorServico').touched" [ngClass]="'class-error-form'">{{ 'CAMPO_OBRIGATORIO' | translate }}</div>
 
                 <ion-item (click)="selecionaDataEntrega()" class="margin-ion-item">
-                    <ion-label stacked style="color: #000; font-size: 14px;">Data da entrega*</ion-label>
+                    <ion-label stacked style="color: #000; font-size: 14px;">{{ 'DATA_ENTREGA' | translate }}*</ion-label>
                     <ion-datetime formControlName="dataEntrega" color="dark" name="dataEntrega" displayFormat="DD/MM/YYYY" [(ngModel)]="dataEntrega" style="color: #000"></ion-datetime>
                 </ion-item>
-                <div *ngIf="!respostaServicoForm.get('dataEntrega').valid && respostaServicoForm.get('dataEntrega').touched && !dataEntrega" [ngClass]="'class-error-form'">campo obrigatório</div>
+                <div *ngIf="!respostaServicoForm.get('dataEntrega').valid && respostaServicoForm.get('dataEntrega').touched && !dataEntrega" [ngClass]="'class-error-form'">{{ 'CAMPO_OBRIGATORIO' | translate }}</div>
 
                 <ion-item (click)="selecionaDataValidadeOrcamento()" class="margin-ion-item">
-                    <ion-label stacked style="color: #000; font-size: 14px;">Validade orçamento*</ion-label>
+                    <ion-label stacked style="color: #000; font-size: 14px;">{{ 'LABEL_VALIDADE_ORCAMENTO' | translate }}*</ion-label>
                     <ion-datetime formControlName="validadeOrcamento" color="dark" name="validadeOrcamento" displayFormat="DD/MM/YYYY" [(ngModel)]="validadeOrcamento" style="color: #000"></ion-datetime>
                 </ion-item>
-                <div *ngIf="!respostaServicoForm.get('validadeOrcamento').valid && respostaServicoForm.get('validadeOrcamento').touched && !validadeOrcamento" [ngClass]="'class-error-form'">campo obrigatório</div>
+                <div *ngIf="!respostaServicoForm.get('validadeOrcamento').valid && respostaServicoForm.get('validadeOrcamento').touched && !validadeOrcamento" [ngClass]="'class-error-form'">{{ 'CAMPO_OBRIGATORIO' | translate }}</div>
 
                 <ion-item class="margin-ion-item">
-                    <ion-label stacked style="color: #000; font-size: 14px;">Tipo de pagamento*</ion-label>
+                    <ion-label stacked style="color: #000; font-size: 14px;">{{ 'TIPO_PAGAMENTO' | translate }}*</ion-label>
                     <ion-input formControlName="tipoPagamento" style="color: #000;" [(ngModel)]="cotacaoFornecedorEntity.tipoPagamento" type="text" maxlength="100" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></ion-input>
                 </ion-item>
-                <div *ngIf="!respostaServicoForm.get('tipoPagamento').valid && respostaServicoForm.get('tipoPagamento').touched" [ngClass]="'class-error-form'" style="margin-bottom: 20px;">campo obrigatório</div>
+                <div *ngIf="!respostaServicoForm.get('tipoPagamento').valid && respostaServicoForm.get('tipoPagamento').touched" [ngClass]="'class-error-form'" style="margin-bottom: 20px;">{{ 'CAMPO_OBRIGATORIO' | translate }}</div>
 
                 <ion-item style="margin-top: 5px;">
-                    <ion-label stacked style="color: #000; font-size: 14px;">Observação</ion-label>
+                    <ion-label stacked style="color: #000; font-size: 14px;">{{ 'OBSERVACAO' | translate }}</ion-label>
                     <ion-textarea formControlName="observacaoServicoCotacao" rows="5" style="color: #000; font-size: 14px;" [(ngModel)]="value" type="text" maxlength="200" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></ion-textarea>
                 </ion-item>
 
@@ -207,13 +212,13 @@
         <ion-row *ngIf="cotacaoFornecedorEntity.statusCotacaoEnum != 'ESCOLHIDO'">
             <ion-col no-padding>
                 <button no-margin ion-button full icon-end color="danger" (click)="rejeitarCotacaoConfirm()">
-                    <span style="font-size: 12px;">REJEITAR</span>
+                    <span style="font-size: 12px;">{{ 'BTN_REJEITAR_UPPER' | translate }}</span>
                     <ion-icon ios="ios-close" md="md-close"></ion-icon>
                 </button>
             </ion-col>
             <ion-col no-padding>
                 <button no-margin ion-button full icon-end color="button-save-color" (click)="aprovarCotacao()">
-                    <span style="font-size: 12px;">ACEITAR SERVIÇO</span>
+                    <span style="font-size: 12px;">{{ 'LABEL_ACEITAR_SERVICO' | translate }}</span>
                     <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
                 </button>
             </ion-col>
@@ -227,7 +232,7 @@
         <ion-row>
             <ion-col no-padding>
                 <button no-margin ion-button full icon-end color="button-save-color" (click)="concluirCotacaoConfirm()">
-                    <span style="font-size: 12px;">CONCLUIR</span>
+                    <span style="font-size: 12px;">{{ 'BTN_CONCLUIR' | translate }}</span>
                     <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>
                 </button>
             </ion-col>

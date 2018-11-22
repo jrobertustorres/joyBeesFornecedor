@@ -34,6 +34,18 @@
     margin: 0px 8px;
 }
 
+.hr10 {
+    display: block;
+    height: 10px;
+    border: 0;
+    border-top: 0.1px solid #DEDEDE!important;
+    padding: 0;
+}
+
+.p-style-color {
+    color: #999;
+}
+
 // hr {
 //     display: block;
 //     height: 1px;
@@ -158,4 +170,12 @@ ion-fab {
 
 .content-ios .scroll-content {
     overflow-y: scroll !important;
+}
+
+.background-style {
+    background-color: #484848!important;
+}
+
+.span-color {
+    color: #fff;
 }

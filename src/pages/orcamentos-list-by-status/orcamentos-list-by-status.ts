@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, LoadingController, AlertController
 
 //SERVICES
 import { CockpitCotacaoService } from '../../providers/cockpit-cotacao-service';
+import { LanguageTranslateService } from '../../providers/language-translate-service';
 
 //ENTITYS
 import { CotacaoEntity } from './../../model/cotacao-entity';
@@ -21,21 +22,44 @@ export class OrcamentosListByStatusPage {
   private cotacoesList: any;
   private cotacaoEntity: CotacaoEntity;
   private refresh: boolean = false;
+  public languageDictionary: any;
+  public statusEnum: string;
 
   constructor(public navCtrl: NavController,
               public alertCtrl: AlertController,
               public loadingCtrl: LoadingController,
               private cockpitCotacaoService: CockpitCotacaoService,
+              private languageTranslateService: LanguageTranslateService,
               public navParams: NavParams) {
     this.cotacaoEntity = new CotacaoEntity();
     this.status = navParams.get("status");
   }
   
   ngOnInit() {
-    this.findOrcamentosListByStatus();
+    this.getTraducao();
+    // this.findOrcamentosListByStatus();
   }
 
   ionViewDidLoad() {
+  }
+
+  getTraducao() {
+    try {
+
+      this.languageTranslateService
+      .getTranslate()
+      .subscribe(dados => {
+        this.languageDictionary = dados;
+        this.getStatusTranslate();
+        this.findOrcamentosListByStatus();
+      });
+    }
+    catch (err){
+      if(err instanceof RangeError){
+        console.log('out of range');
+      }
+      console.log(err);
+    }
   }
 
   loadMore(infiniteScroll) {
@@ -53,7 +77,7 @@ export class OrcamentosListByStatusPage {
 
       if(this.refresh == false) {
         this.loading = this.loadingCtrl.create({
-          content: 'Aguarde...',
+          content: this.languageDictionary.LOADING_TEXT,
         });
         this.loading.present();
       }
@@ -105,6 +129,31 @@ export class OrcamentosListByStatusPage {
 
   openDetalhaCotacao(idCotacao, statusCotacao) {
     this.navCtrl.push(OrcamentoFornecedorDetalhePage, {idCotacao: idCotacao, statusCotacao: statusCotacao});
+  }
+
+  getStatusTranslate() {
+    switch(this.status) { 
+      case 'ABERTO': { 
+          this.statusEnum = this.languageDictionary.LABEL_STATUS_ENUM_ABERTO;
+          break; 
+      } 
+      case 'RESPONDIDO': { 
+          this.statusEnum = this.languageDictionary.LABEL_STATUS_ENUM_RESPONDIDO;
+          break; 
+      } 
+      case 'ESCOLHIDO': { 
+          this.statusEnum = this.languageDictionary.LABEL_STATUS_ENUM_ESCOLHIDO;
+          break; 
+      } 
+      case 'CONCLUIDO': { 
+          this.statusEnum = this.languageDictionary.LABEL_STATUS_ENUM_CONCLUIDO;
+          break; 
+      } 
+      default: { 
+          //statements; 
+          break; 
+      } 
+    } 
   }
 
 }

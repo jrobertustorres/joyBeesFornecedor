@@ -11,6 +11,12 @@ import { Network } from '@ionic-native/network';
 import { MenuPage } from '../pages/menu/menu';
 import { HomePage } from './../pages/home/home';
 
+//I18N
+import { TranslateService } from '@ngx-translate/core';
+import { defaultLanguage, availableLanguages, sysOptions } from '../pages/i18n/i18n-constants';
+import { LanguageTranslateService } from '../providers/language-translate-service';
+import { Globalization } from '@ionic-native/globalization';
+
 @Component({
   template: '<ion-nav #baseNav></ion-nav>'
 })
@@ -18,6 +24,10 @@ import { HomePage } from './../pages/home/home';
 export class MyApp {
   @ViewChild('baseNav') nav: Nav;
   rootPage:any;
+  private translate: TranslateService;
+  private titleConection: string;
+  private subTitleConection: string;
+  public languageDictionary: any;
 
   constructor(public platform: Platform,
               public statusBar: StatusBar,
@@ -26,9 +36,14 @@ export class MyApp {
               public push: Push,
               private network: Network,
               private appVersion: AppVersion,
+              translate: TranslateService,
+              private globalization: Globalization,
+              private languageTranslateService: LanguageTranslateService,
               public menuCtrl: MenuController) {
 
     this.initializeApp();
+
+    this.translate = translate;
 
   }
 
@@ -39,6 +54,8 @@ export class MyApp {
   initializeApp() {
     this.platform.ready().then(() => {
       this.platform.registerBackButtonAction(()=>this.myHandlerFunction());
+      // this.getLanguegeDefault();
+
       if (this.platform.is('cordova')) {
         this.appVersion.getVersionNumber().then((version) => {
           localStorage.setItem(Constants.VERSION_NUMBER, version);
@@ -47,19 +64,63 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.initPushNotification();
       this.splashScreen.hide();
-      // aqui checamos a conexão ao entrar no app
-      this.checkNetwork();
       // abaixo verificamos se a intenet cair depois que o cliente já entrou no app
-      // let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
       this.network.onDisconnect().subscribe(() => {
-        this.checkNetwork();
-        // disconnectSubscription.unsubscribe();
+        let alertDisconect = this.alertCtrl.create({
+          title: this.languageDictionary.TITLE_CONECTION,
+          subTitle: this.languageDictionary.SUBTITLE_CONECTION,
+          buttons: [{
+             text: 'Ok',
+             handler: () => {
+                 this.platform.exitApp();
+                }
+             }]
+           });
+           alertDisconect.present();
       });
     });
   }
 
   myHandlerFunction(){
     //desabilitando o botão de voltar do android
+  }
+
+  getTraducao() {
+    try {
+
+      this.languageTranslateService
+      .getTranslate()
+      .subscribe(dados => {
+        this.languageDictionary = dados;
+        // aqui checamos a conexão ao entrar no app
+        this.checkNetwork();
+        this.nav.push(MenuPage, { animate: false });
+      });
+    }
+    catch (err){
+      if(err instanceof RangeError){
+        console.log('out of range');
+      }
+      console.log(err);
+    }
+  }
+
+  //OBTENDO O IDIOMA CONFIGURADO NO APARELHO
+  getLanguegeDefault() {
+    if ((<any>window).cordova) {
+      this.globalization.getPreferredLanguage().then(result => {
+        let idioma = result.value == 'pt-BR' ? 'pt-br' : 'en';
+        localStorage.setItem(Constants.IDIOMA_USUARIO, idioma);
+        this.getTraducao();
+      });
+    }
+    else {
+      let browserLanguage = this.translate.getBrowserLang() || defaultLanguage;
+      browserLanguage = browserLanguage == 'pt' ? 'pt-br' : 'en';
+      localStorage.setItem(Constants.IDIOMA_USUARIO, browserLanguage);
+      this.getTraducao();
+    }
+
   }
 
   initPushNotification() {

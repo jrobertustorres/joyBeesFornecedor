@@ -5,7 +5,8 @@
     <ion-icon name="menu"></ion-icon>
   </button>
         <ion-title>
-            Orç. {{ status | lowercase}}s
+            <!-- Orç. {{ status | lowercase}}s -->
+            {{ statusEnum }}
         </ion-title>
     </ion-navbar>
 
@@ -15,7 +16,7 @@
     <ion-searchbar (ionInput)="getItems($event)" *ngIf="showFilter" placeholder="Buscar"></ion-searchbar>
 
     <div class="h2-color-cards" text-wrap padding style="margin-top: 50px;" *ngIf="cotacoesList?.length == 0">
-        <div style="text-align: center;color: #484848;"><strong>Não existe nenhum orçamento {{ status | lowercase}}</strong></div>
+        <div style="text-align: center;color: #484848;"><strong>{{ 'LABEL_NAO_EXISTE_ORCAMENTO' | translate }} {{ statusEnum | lowercase}}</strong></div>
         <div style="text-align: center;">
             <ion-icon style="font-size: 30px;color: #484848;" ios="ios-albums" md="md-albums"></ion-icon>
         </div>
@@ -23,11 +24,11 @@
 
     <ion-list>
         <button ion-item *ngFor="let cotacao of cotacoesList" (click)="openDetalhaCotacao(cotacao.idCotacao, cotacao.statusCotacaoEnum)">
-          <h4 style="color: #66667D;">Nr. Orçamento: <strong>{{ cotacao.idOrcamentoFormat }}</strong></h4>
-          <h4 style="color: #66667D;">Serviço: <strong>{{ cotacao.nomeServico }}</strong></h4>
-          <h4 style="color: #66667D;">Aberto em: {{ cotacao.dataCadastroFormat }}</h4>
-          <h4 *ngIf="cotacao.statusCotacaoEnum != 'ABERTO' && cotacao.statusCotacaoEnum != 'CONCLUIDO'"  style="color: #66667D;">Respondido em: {{ cotacao.dataRespostaFormat }}</h4>
-          <h4 *ngIf="cotacao.statusCotacaoEnum == 'CONCLUIDO'"  style="color: #66667D;">Concluído em: {{ cotacao.dataConcluidaFormat }}</h4>
+          <h4 style="color: #66667D;">{{ 'NUMERO_ORCAMENTO' | translate }}: <strong>{{ cotacao.idOrcamentoFormat }}</strong></h4>
+          <h4 style="color: #66667D;">{{ 'SERVICO' | translate }}: <strong>{{ cotacao.nomeServico }}</strong></h4>
+          <h4 style="color: #66667D;">{{ 'LABEL_ABERTO_EM' | translate }}: {{ cotacao.dataCadastroFormat }}</h4>
+          <h4 *ngIf="cotacao.statusCotacaoEnum != 'ABERTO' && cotacao.statusCotacaoEnum != 'CONCLUIDO'"  style="color: #66667D;">{{ 'LABEL_RESPONDIDO_EM' | translate }}: {{ cotacao.dataRespostaFormat }}</h4>
+          <h4 *ngIf="cotacao.statusCotacaoEnum == 'CONCLUIDO'"  style="color: #66667D;">{{ 'LABEL_CONCLUIDO_EM' | translate }}: {{ cotacao.dataConcluidaFormat }}</h4>
         </button>
     </ion-list>
 

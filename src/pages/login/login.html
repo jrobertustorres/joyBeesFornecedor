@@ -2,36 +2,36 @@
 
     <div class="div-style-logo">
         <img src="assets/imgs/logo.png" class="logo-style">
-        <span class="span-fornecedor">FORNECEDOR</span>
+        <span class="span-fornecedor">{{ 'FORNECEDOR_UPPER' | translate }}</span>
     </div>
     <div class="div-home-text">
-        <span style="text-align: center; ">Conectando você a seus clientes</span>
+        <span style="text-align: center; ">{{ 'LABEL_CONECTANDO_VOCE' | translate }}</span>
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="submeterLogin()">
 
         <ion-item style="background: #2C2E32">
-            <ion-label stacked color="arrow-color">E-mail</ion-label>
+            <ion-label stacked color="arrow-color">{{ 'EMAIL' | translate }}</ion-label>
             <ion-input formControlName="login" type="email" placeholder="Ex.: nome@email.com" spellcheck="false" autocapitalize="off" style="color: #fff;"></ion-input>
         </ion-item>
-        <div *ngIf="(!loginForm.get('login').valid && loginForm.get('login').touched) && !loginForm.get('login').hasError('pattern')" [ngClass]="'class-error-form-login'">campo obrigatório</div>
-        <div *ngIf="loginForm.get('login').hasError('pattern')" [ngClass]="'class-error-form-login'">e-mail inválido</div>
+        <div *ngIf="(!loginForm.get('login').valid && loginForm.get('login').touched) && !loginForm.get('login').hasError('pattern')" [ngClass]="'class-error-form-login'">{{ 'CAMPO_OBRIGATORIO' | translate }}</div>
+        <div *ngIf="loginForm.get('login').hasError('pattern')" [ngClass]="'class-error-form-login'">{{ 'EMAIL_INVALIDO' | translate }}</div>
 
         <ion-item style="background: #2C2E32">
-            <ion-label stacked color="arrow-color">Senha</ion-label>
-            <ion-input formControlName="senha" id="senha" type="text" *ngIf="showPwd" style="font-size: 14px; color: #fff;" placeholder="Digite sua senha"></ion-input>
-            <ion-input formControlName="senha" id="senha" type="password" *ngIf="!showPwd" style="font-size: 14px; color: #fff;" placeholder="Digite sua senha"></ion-input>
+            <ion-label stacked color="arrow-color">{{ 'SENHA' | translate }}</ion-label>
+            <ion-input formControlName="senha" id="senha" type="text" *ngIf="showPwd" style="font-size: 14px; color: #fff;" placeholder="{{ 'DIGITE_SENHA' | translate }}"></ion-input>
+            <ion-input formControlName="senha" id="senha" type="password" *ngIf="!showPwd" style="font-size: 14px; color: #fff;" placeholder="{{ 'DIGITE_SENHA' | translate }}"></ion-input>
             <button icon-only ion-button clear type="button" item-right color="dark" (click)="showPwd=!showPwd">
                 <ion-icon *ngIf="showPwd" name="eye"></ion-icon>
                 <ion-icon *ngIf="!showPwd" name="eye-off"></ion-icon>
             </button>
         </ion-item>
-        <div *ngIf="!loginForm.get('senha').valid && loginForm.get('senha').touched" [ngClass]="'class-error-form-login'">campo obrigatório</div>
+        <div *ngIf="!loginForm.get('senha').valid && loginForm.get('senha').touched" [ngClass]="'class-error-form-login'">{{ 'CAMPO_OBRIGATORIO' | translate }}</div>
 
-        <button ion-button block type="submit" color="navbarColor" class="margin-button-save" style="color: #000;"><span style="color: #FDB313">ENTRAR</span></button>
+        <button ion-button block type="submit" color="navbarColor" class="margin-button-save" style="color: #000;"><span style="color: #FDB313">{{ 'ENTRAR' | translate }}</span></button>
     </form>
     <div class="forgot-pass-style-div">
-        <a (click)="goRecuperarSenha()" style="color: #fff" class="botao01">Esqueci minha senha</a>
+        <a (click)="goRecuperarSenha()" style="color: #fff" class="botao01">{{ 'ESQUECI_SENHA' | translate }}</a>
     </div>
 
 </ion-content>

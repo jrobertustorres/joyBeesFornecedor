@@ -9,8 +9,13 @@ import { HomePage } from '../home/home';
 //ENTITY
 import { UsuarioEntity } from '../../model/usuario-entity';
 
-//PROVIDER
+//SERVICES
 import { LoginService } from '../../providers/login-service';
+import { LanguageTranslateService } from '../../providers/language-translate-service';
+
+//I18N
+// import { TranslateService } from '@ngx-translate/core';
+// import { availableLanguages, sysOptions } from '../i18n/i18n-constants';
 
 // @IonicPage()
 @Component({
@@ -24,18 +29,26 @@ export class LoginPage implements OnInit {
   private usuarioEntity: UsuarioEntity;
   private loading = null;
   private loadingText: string;
+  // languages = availableLanguages;
+  selectedLanguage: any;
+  // private translate: TranslateService;
+  public languageDictionary: any;
 
   constructor(public navCtrl: NavController, 
               private loginService: LoginService, 
               public alertCtrl: AlertController,
               public loadingCtrl: LoadingController,
               private menu : MenuController,
+              private languageTranslateService: LanguageTranslateService,
+              // translate: TranslateService,
               private formBuilder: FormBuilder) {
 
+    // this.translate = translate;
     this.usuarioEntity = new UsuarioEntity();
   }
 
   ngOnInit() {
+    this.getTraducao();
     this.loginForm 	= this.formBuilder.group({
       'login': ['', [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
       'senha': ['', Validators.required]
@@ -51,6 +64,23 @@ export class LoginPage implements OnInit {
 
   ionViewWillLeave() {
     this.menu.enable(true);
+  }
+
+  getTraducao() {
+    try {
+
+      this.languageTranslateService
+      .getTranslate()
+      .subscribe(dados => {
+        this.languageDictionary = dados;
+      });
+    }
+    catch (err){
+      if(err instanceof RangeError){
+        console.log('out of range');
+      }
+      console.log(err);
+    }
   }
 
   goRecuperarSenha() {

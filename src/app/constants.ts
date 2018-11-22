@@ -8,6 +8,7 @@ export class Constants {
   public static TOKEN_USUARIO = 'token_usuario';
   public static TOKEN_PUSH = 'token_push';
   public static TIPO_USUARIO = 'tipo_usuario';
+  public static IDIOMA_USUARIO = 'idioma_usuario';
   public static NOME_PESSOA = 'nome_pessoa';
   public static EMAIL_PESSOA = 'email_pessoa';
   public static APP_NAME = 'app_name';

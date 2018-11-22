@@ -17,6 +17,14 @@ import { LoginService } from '../../providers/login-service';
 import { UsuarioService } from '../../providers/usuario-service';
 import { VersaoAppService } from '../../providers/versao-app-service';
 import { CockpitCotacaoService } from '../../providers/cockpit-cotacao-service';
+import { LanguageTranslateService } from '../../providers/language-translate-service';
+
+//PROVIDERS
+import { LanguageProvider } from '../../providers/language-provider';
+
+//I18N
+import { TranslateService } from '@ngx-translate/core';
+import { availableLanguages, sysOptions } from '../i18n/i18n-constants';
 
 @IonicPage()
 @Component({
@@ -36,6 +44,10 @@ export class MenuPage implements OnInit{
   private versaoAppEntity: VersaoAppEntity;
   private versao: any;
 
+  languages = availableLanguages;
+  selectedLanguage: any;
+  public languageDictionary: any;
+
   constructor(public navParams: NavParams,
               private alertCtrl: AlertController,
               public loadingCtrl: LoadingController,
@@ -44,6 +56,8 @@ export class MenuPage implements OnInit{
               public cockpitCotacaoService: CockpitCotacaoService,
               public usuarioService: UsuarioService,
               private versaoAppService: VersaoAppService,
+              private languageProvider: LanguageProvider,
+              private languageTranslateService: LanguageTranslateService,
               public platform: Platform) {
 
       this.usuarioEntity = new UsuarioEntity();
@@ -52,27 +66,89 @@ export class MenuPage implements OnInit{
   }
 
   ngOnInit() {
+    this.getTraducao();
+
+    this.usuarioService.userChangeEvent.subscribe(nomePessoa => {
+      this.nomePessoa = nomePessoa.split(/(\s).+\s/).join("");
+    });
+    this.usuarioService.emailPessoaChangeEvent.subscribe(email => {
+      this.emailPessoa = email;
+    });
+    this.loginService.userChangeEvent.subscribe(nomePessoa => {
+      this.nomePessoa = nomePessoa.split(/(\s).+\s/).join("");
+    });
+    this.loginService.emailPessoaChangeEvent.subscribe(email => {
+      this.emailPessoa = email;
+    });
+    this.loginService.qtdTicketChangeEvent.subscribe(qtdTicketFornecedor => {
+      this.qtdTicketFornecedor = qtdTicketFornecedor;
+    });
+    this.cockpitCotacaoService.qtdTicketChangeEvent.subscribe(qtdTicketFornecedor => {
+      this.qtdTicketFornecedor = qtdTicketFornecedor;
+    });
+
+    this.languageProvider.languageChangeEvent.subscribe(selectedLanguage => {
+      this.getTraducaoEmited(); // aqui temos que chamar novamente para funcionar a alteração da linguagem no menu
+    });
+    this.loginService.languageChangeEvent.subscribe(selectedLanguage => {
+      this.getTraducaoEmited(); // aqui temos que chamar novamente para funcionar a alteração da linguagem no menu
+    });
+    // try {
+
+    //   // this.constroiMenu();
+    //   if(!localStorage.getItem(Constants.ID_USUARIO)){
+    //     this.rootPage = LoginPage;
+    //   }
+    //   else if(localStorage.getItem(Constants.ID_USUARIO)) {
+    //     this.getAtualizacaoStatus();
+    //   }
+    // } catch (err){
+    // }
+  }
+
+  getTraducao() {
     try {
 
-      this.constroiMenu();
-      if(!localStorage.getItem(Constants.ID_USUARIO)){
-        this.rootPage = LoginPage;
-      }
-      else if(localStorage.getItem(Constants.ID_USUARIO)) {
+      this.languageTranslateService
+      .getTranslate()
+      .subscribe(dados => {
+        this.languageDictionary = dados;
         this.getAtualizacaoStatus();
-        // this.callLoginByIdService(localStorage.getItem(Constants.ID_USUARIO));
+      });
+    }
+    catch (err){
+      if(err instanceof RangeError){
+        console.log('out of range');
       }
-    } catch (err){
+      console.log(err);
     }
   }
 
-  ionViewDidLoad() {
-  }  
+  getTraducaoEmited() {
+    try {
+
+      this.languageTranslateService
+      .getTranslate()
+      .subscribe(dados => {
+        this.languageDictionary = dados;
+        if(localStorage.getItem(Constants.ID_USUARIO)) {
+          this.constroiMenu();
+        }
+
+      });
+    }
+    catch (err){
+      if(err instanceof RangeError){
+        console.log('out of range');
+      }
+      console.log(err);
+    }
+  }
 
   getAtualizacaoStatus() {
     try {
       this.loading = this.loadingCtrl.create({
-        content: 'Autenticando...',
+        content: this.languageDictionary.LOADING_TEXT_AUT,
       });
       this.loading.present();
 
@@ -106,8 +182,8 @@ export class MenuPage implements OnInit{
 
   showAlertVersao(versao) {
     const alert = this.alertCtrl.create({
-      title: 'Atualização do aplicativo',
-      subTitle: 'A versão que você está usando foi descontinuada. É necessário atualizar para continuar usando o app.',
+      title: this.languageDictionary.TITLE_ATUALIZACAO_APP,
+      subTitle: this.languageDictionary.SUBTITLE_ATUALIZACAO_APP,
       buttons: [
         {
         text: 'OK',
@@ -144,8 +220,8 @@ export class MenuPage implements OnInit{
   constroiMenu() {
 
     this.pages = [
-      { title: 'Orçamentos', component: HomePage, isVisible: true, icon: 'ios-copy' },
-      { title: 'Configurações', component: ConfiguracoesPage, isVisible: true, icon: 'ios-settings' },
+      { title: this.languageDictionary.LABEL_ORCAMENTOS, component: HomePage, isVisible: true, icon: 'ios-copy' },
+      { title: this.languageDictionary.CONFIGURACOES, component: ConfiguracoesPage, isVisible: true, icon: 'ios-settings' },
     ];
 
     this.usuarioService.userChangeEvent.subscribe(nomePessoa => {
@@ -180,24 +256,23 @@ export class MenuPage implements OnInit{
       this.usuarioEntity.idUsuario = idUsuario;
       this.loginService.loginByIdFornecedorServicos(this.usuarioEntity)
         .then((usuarioEntityResult: UsuarioEntity) => {
-          // this.constroiMenu();
           this.loading.dismiss();
           this.rootPage = HomePage;
 
         }, (err) => {
           this.loading.dismiss();
-          err.message = err.message ? err.message : 'Não foi possível conectar ao servidor';
-        this.alertCtrl.create({
-          subTitle: err.message,
-          buttons: [{
-            text: 'OK',
-            handler: () => {
-              this.logout();
-            }
-          }]
-          // buttons: ['OK']
-        }).present();
-      });
+          err.message = err.message ? err.message : this.languageDictionary.LABEL_FALHA_CONEXAO_SERVIDOR;
+          this.alertCtrl.create({
+            subTitle: err.message,
+            buttons: [{
+              text: 'OK',
+              handler: () => {
+                this.logout();
+              }
+            }]
+            // buttons: ['OK']
+          }).present();
+        });
     }
     catch (err){
       if(err instanceof RangeError){
@@ -218,14 +293,14 @@ export class MenuPage implements OnInit{
 
   confirmaLogout() {
     let alert = this.alertCtrl.create({
-      subTitle: 'Deseja realmente sair?',
+      subTitle: this.languageDictionary.SUBTITLE_SAIR,
       buttons: [
         {
-          text: 'Ficar',
+          text: this.languageDictionary.BTN_FICAR,
           role: 'cancel'
         },
         {
-          text: 'Sair',
+          text: this.languageDictionary.SAIR_UPPER,
           handler: () => {
             localStorage.removeItem(Constants.ID_USUARIO);
             localStorage.removeItem(Constants.TOKEN_USUARIO);

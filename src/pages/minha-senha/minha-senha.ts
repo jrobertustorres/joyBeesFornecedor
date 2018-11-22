@@ -7,6 +7,7 @@ import { UsuarioEntity } from '../../model/usuario-entity';
 
 // SERVICES
 import { UsuarioService } from '../../providers/usuario-service';
+import { LanguageTranslateService } from '../../providers/language-translate-service';
 
 // PAGES
 import { ConfiguracoesPage } from '../../pages/configuracoes/configuracoes';
@@ -23,6 +24,7 @@ export class MinhaSenhaPage {
   private usuarioEntity: UsuarioEntity;
   private loading = null;
   public minhaSenhaForm: FormGroup;
+  public languageDictionary: any;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -30,12 +32,14 @@ export class MinhaSenhaPage {
               public alertCtrl: AlertController,
               private usuarioService: UsuarioService,
               private toastCtrl: ToastController,
+              private languageTranslateService: LanguageTranslateService,
               private formBuilder: FormBuilder) {
 
     this.usuarioEntity = new UsuarioEntity();
   }
 
   ngOnInit() {
+    this.getTraducao();
     this.minhaSenhaForm = this.formBuilder.group({
       'senha': ['', Validators.required],
       'novaSenha': ['', Validators.required],
@@ -49,9 +53,26 @@ export class MinhaSenhaPage {
   ionViewDidLoad() {
   }
 
+  getTraducao() {
+    try {
+
+      this.languageTranslateService
+      .getTranslate()
+      .subscribe(dados => {
+        this.languageDictionary = dados;
+      });
+    }
+    catch (err){
+      if(err instanceof RangeError){
+        console.log('out of range');
+      }
+      console.log(err);
+    }
+  }
+
   presentToast() {
     let toast = this.toastCtrl.create({
-      message: 'Sua senha foi alterada!',
+      message: this.languageDictionary.SENHA_ALTERADA_SUCESSO,
       duration: 3000,
       position: 'middle',
       cssClass: "toast-success"
@@ -69,7 +90,7 @@ export class MinhaSenhaPage {
       try {
         
         this.loading = this.loadingCtrl.create({
-          content: 'Aguarde...',
+          content: this.languageDictionary.LOADING_TEXT,
         });
         this.loading.present();
 

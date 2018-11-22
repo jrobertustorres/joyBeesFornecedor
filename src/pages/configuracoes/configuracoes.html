@@ -5,7 +5,7 @@
                 <ion-icon name="menu"></ion-icon>
             </button>
         <ion-title>
-            Configurações
+            {{ 'CONFIG' | translate }}
         </ion-title>
     </ion-navbar>
 
@@ -16,43 +16,57 @@
     <ion-card>
         <ion-card-header style="background-color: #484848;">
             <p class="h2-color-cards">
-                <strong style="color: #fff;">Minha área</strong>
+                <strong class="span-color">{{ 'MINHA_AREA' | translate }}</strong>
             </p>
         </ion-card-header>
 
         <ion-list>
             <button ion-item class="border-top-color" (click)="meusDados()" style="background-color: #484848;">
                 <ion-icon ios="ios-person" md="md-person" item-start color="light"></ion-icon>
-                <span style="color: #fff;">Meus dados</span>
+                <span class="span-color">{{ 'MEUS_DADOS' | translate }}</span>
             </button>
             <!-- <button ion-item class="border-top-color" (click)="meuEndereco()" style="background-color: #484848;">
                 <ion-icon ios="ios-home" md="md-home" item-start color="light"></ion-icon>
                 <span style="color: #fff;">Meu endereço</span>
             </button> -->
 
-            <button ion-item (click)="minhaSenha()" style="background-color: #484848;">
+            <button ion-item (click)="minhaSenha()" class="background-style">
                     <ion-icon ios="ios-lock" md="md-lock" item-start color="light"></ion-icon>
-                    <span style="color: #fff;">Minha senha</span>
+                    <span class="span-color">{{ 'MINHA_SENHA' | translate }}</span>
                 </button>
         </ion-list>
     </ion-card>
 
     <ion-card>
-        <ion-card-header style="background-color: #484848;">
+        <ion-item class="background-style">
+            <ion-label>
+                <p>
+                    <strong class="span-color">{{ 'SELECT_IDIOMA' | translate }}</strong>
+                </p>
+            </ion-label>
+
+            <ion-select (ionChange)="applyLanguage()" [(ngModel)]="selectedLanguage" style="font-size: 14px;">
+                <ion-option *ngFor="let lang of languages" [value]="lang.code">{{ lang.name }}</ion-option>
+            </ion-select>
+        </ion-item>
+    </ion-card>
+
+    <ion-card>
+        <ion-card-header class="background-style">
             <p class="h2-color-cards">
-                <strong style="color: #fff;">Termos e condições</strong>
+                <strong class="span-color">{{ 'TERMOS_CONDICOES' | translate }}</strong>
             </p>
         </ion-card-header>
 
         <ion-list>
             <button ion-item class="border-top-color" (click)="openModalTermos()" style="background-color: #484848;">
                     <ion-icon ios="ios-list-box" md="md-list-box" item-start color="light"></ion-icon>
-                    <span style="color: #fff;">Termos de uso</span>
+                    <span class="span-color">{{ 'TERMOS_USO' | translate }}</span>
                 </button>
 
-            <button ion-item (click)="openModalPolitica()" style="background-color: #484848;">
+            <button ion-item (click)="openModalPolitica()" class="background-style">
                     <ion-icon ios="ios-document" md="md-document" item-start color="light"></ion-icon>
-                    <span style="color: #fff;">Política de privacidade</span>
+                    <span class="span-color">{{ 'POLITICA_PRIVACIDADE' | translate }}</span>
                 </button>
         </ion-list>
     </ion-card>

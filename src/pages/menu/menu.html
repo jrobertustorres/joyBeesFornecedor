@@ -1,22 +1,22 @@
 <ion-menu type="reveal" id="myMenu" [content]="content">
-    <ion-header style="background-color: #484848;">
+    <ion-header class="background-style">
 
-        <ion-card text-center class="hide-card" style="background-color: #484848; margin-top: 50px;">
+        <ion-card text-center class="hide-card background-style" style="margin-top: 50px;">
             <div class="custom-avatar">
                 <img src="assets/imgs/logo.png" class="custom-avatar" />
-                <span class="span-fornecedor-menu">FORNECEDOR</span>
+                <span class="span-fornecedor-menu">{{ 'FORNECEDOR_UPPER' | translate }}</span>
             </div>
 
             <div style="margin-top: 10px; margin-bottom: 15px; color: #fff">
-                <p style="color: #fff">Conectando você a seus clientes</p>
+                <p style="color: #fff">{{ 'LABEL_CONECTANDO_VOCE' | translate }}</p>
             </div>
 
             <div>
                 <h2 style="color: #fff">{{ nomePessoa }}</h2>
             </div>
             <div style="margin-bottom: -10px;">
-                <span padding *ngIf="qtdTicketFornecedor > 0" class="corAmarela"><b>Você possui {{ qtdTicketFornecedor }} tickets</b></span>
-                <span padding *ngIf="qtdTicketFornecedor == 0" class="corDanger"><b>Você não possui tickets</b></span>
+                <span padding *ngIf="qtdTicketFornecedor > 0" class="corAmarela"><b>{{ 'LABEL_VOCE_POSSUI' | translate }} {{ qtdTicketFornecedor }} {{ 'LABEL_MOEDAS' | translate }}</b></span>
+                <span padding *ngIf="qtdTicketFornecedor == 0" class="corDanger"><b>{{ 'LABEL_VOCE_NAO_POSSUI' | translate }}</b></span>
             </div>
             <hr>
         </ion-card>
@@ -24,16 +24,16 @@
     </ion-header>
 
 
-    <ion-content style="background-color: #424242;">
+    <ion-content class="background-style">
         <ion-list>
-            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)" [class.no-click]="p.isVisible==false" style="background-color: #424242;">
+            <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)" [class.no-click]="p.isVisible==false" class="background-style">
                 <ion-icon [name]="p.icon" item-left item-start color="light" *ngIf='p.isVisible'></ion-icon>
                 <h4 *ngIf='p.isVisible' style="color: #fff">{{p.title}}</h4>
             </button>
 
-            <ion-item menu-close ion-item color="white" (click)="confirmaLogout()" class="my-position-button" style="background-color: #424242;">
+            <ion-item menu-close ion-item color="white" (click)="confirmaLogout()" class="my-position-button background-style">
                 <ion-icon ios="ios-exit" md="ios-exit" item-start color="light"></ion-icon>
-                <h4 style="color: #fff">Sair</h4>
+                <h4 style="color: #fff">{{ 'SAIR' | translate }}</h4>
             </ion-item>
         </ion-list>
     </ion-content>

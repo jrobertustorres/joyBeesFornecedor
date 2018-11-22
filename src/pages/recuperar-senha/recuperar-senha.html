@@ -5,7 +5,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
         <ion-title>
-            Recuperar senha
+            {{ 'RECUPERAR_SENHA' | translate }}
         </ion-title>
     </ion-navbar>
 
@@ -14,21 +14,20 @@
 <ion-content padding>
     <div>
         <div style="text-align:center; margin-top: 25px;" class="show-list-numbers-and-dots">
-            <p style="color:#000000;">Informe seu e-mail</p>
+            <p style="color:#000000;">{{ 'INFORME_EMAIL' | translate }}</p>
         </div>
     </div>
 
     <form [formGroup]="recuperarSenhaForm" (ngSubmit)="submeterRecuperarSenha()">
 
         <ion-item>
-            <ion-label stacked>E-mail</ion-label>
+            <ion-label stacked>{{ 'EMAIL' | translate }}</ion-label>
             <ion-input formControlName="email" [(ngModel)]="usuarioEntity.email" type="email" [readonly]="isReadOnly"></ion-input>
         </ion-item>
-        <div *ngIf="(!recuperarSenhaForm.get('email').valid && recuperarSenhaForm.get('email').touched) && !recuperarSenhaForm.get('email').hasError('pattern')" [ngClass]="'class-error-form'">campo obrigatório</div>
-        <div *ngIf="recuperarSenhaForm.get('email').hasError('pattern')" [ngClass]="'class-error-form'">E-mail inválido</div>
+        <div *ngIf="(!recuperarSenhaForm.get('email').valid && recuperarSenhaForm.get('email').touched) && !recuperarSenhaForm.get('email').hasError('pattern')" [ngClass]="'class-error-form'">{{ 'CAMPO_OBRIGATORIO' | translate }}</div>
+        <div *ngIf="recuperarSenhaForm.get('email').hasError('pattern')" [ngClass]="'class-error-form'">{{ 'EMAIL_INVALIDO' | translate }}</div>
 
-        <button ion-button block type="submit" color="navbarColor" class="margin-button-save" style="color: #000;"><span style="color: #FDB313">ENVIAR</span></button>
-        <!-- <button ion-button block type="submit" color="button-save-color" style="margin-top: 30px;">ENVIAR</button> -->
+        <button ion-button block type="submit" color="navbarColor" class="margin-button-save" style="color: #000;"><span style="color: #FDB313">{{ 'ENVIAR' | translate }}</span></button>
     </form>
 
 </ion-content>
