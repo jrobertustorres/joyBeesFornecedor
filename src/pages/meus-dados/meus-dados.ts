@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, ToastController, ModalController } from 'ionic-angular';
 import { FormBuilder,	FormGroup, Validators } from '@angular/forms';
+import { Constants } from '../../app/constants';
 
 //ENTITYS
 import { FornecedorEntity } from './../../model/fornecedor-entity';
@@ -66,7 +67,9 @@ export class MeusDadosPage implements OnInit {
       .getTranslate()
       .subscribe(dados => {
         this.languageDictionary = dados;
-        this.callGetDadosFornecedor();
+        if(localStorage.getItem(Constants.TOKEN_USUARIO)) {
+          this.callGetDadosFornecedor();
+        }
       });
     }
     catch (err){

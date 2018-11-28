@@ -188,7 +188,7 @@
     "LABEL_INFORME_DADOS": "Informe os dados abaixo que entraremos em contato",
     "LABEL_ENCERRADA": "Encerrada em:",
     "TITLE_CONTATO_ENVIADO": "Contato enviado",
-    "SUBTITLE_CONTATO_ENVIADO": "Obrigado por seu interesse. Em breve entraremos em contato!",
+    "SUBTITLE_CONTATO_ENVIADO": "Obrigado por seu interesse. Em breve entraremos em contato para finalizar seu cadastro!",
     "SENHA_ALTERADA_SUCESSO": "Sua senha foi alterada!",
     "TOAST_RECUPERAR_SENHA": "Um e-mail foi enviado com a nova senha! Favor verificar.",
     "LOADING_TEXT": "Aguarde...",
@@ -265,7 +265,10 @@
     "LABEL_ACEITAR_SERVICO": "ACEITAR SERVIÇO",
     "LABEL_VOCE_POSSUI": "Você possui",
     "LABEL_VOCE_NAO_POSSUI": "Você não possui moedas",
-    "LABEL_MOEDAS": "moedas"
+    "LABEL_MOEDAS": "moedas",
+    "BTN_CADASTRAR": "CADASTRAR-SE",
+    "AREA_ATUACAO": "Área de atuação",
+    "DADOS_CONTATO": "Dados para contato"
 
 
 

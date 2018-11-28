@@ -1,0 +1,49 @@
+<ion-header>
+
+  <ion-navbar color="dark">
+      <ion-title>{{ 'DADOS_CONTATO' | translate }}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content>
+    <div>
+        <div style="text-align:center;" class="div-style">
+            <p style="color:#000000;">{{ 'LABEL_INFORME_DADOS' | translate }}</p>
+        </div>
+    </div>
+    <form [formGroup]="cadastrarFornecedorForm" (ngSubmit)="submeterPreCadastroFornecedor()" style="margin-top: -10px;">
+
+        <ion-item>
+            <ion-label stacked>{{ 'NOME_CONTATO' | translate }}</ion-label>
+            <ion-input formControlName="pessoaContato" [(ngModel)]="preCadastroEntity.pessoaContato" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></ion-input>
+        </ion-item>
+        <div *ngIf="!cadastrarFornecedorForm.get('pessoaContato').valid && cadastrarFornecedorForm.get('pessoaContato').touched" [ngClass]="'class-error-form'">{{ 'CAMPO_OBRIGATORIO' | translate }}</div>
+        <div *ngIf="cadastrarFornecedorForm.get('pessoaContato').hasError('maxlength')" [ngClass]="'class-error-form'">{{ 'MAX_100_CARACTERES' | translate }}</div>
+
+        <ion-item>
+            <ion-label stacked>{{ 'EMAIL' | translate }}</ion-label>
+            <ion-input formControlName="email" [(ngModel)]="preCadastroEntity.email" type="email" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></ion-input>
+        </ion-item>
+        <div *ngIf="(!cadastrarFornecedorForm.get('email').valid && cadastrarFornecedorForm.get('email').touched) && !cadastrarFornecedorForm.get('email').hasError('pattern')" [ngClass]="'class-error-form'">{{ 'CAMPO_OBRIGATORIO' | translate }}</div>
+        <div *ngIf="cadastrarFornecedorForm.get('email').hasError('pattern')" [ngClass]="'class-error-form'">{{ 'EMAIL_INVALIDO' | translate }}</div>
+
+        <ion-item>
+            <ion-label stacked>{{ 'TELEFONE' | translate }}</ion-label>
+            <ion-input formControlName="telefone" [(ngModel)]="preCadastroEntity.telefone" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></ion-input>
+        </ion-item>
+        <div *ngIf="cadastrarFornecedorForm.get('telefone').hasError('maxlength')" [ngClass]="'class-error-form'">{{ 'MAX_50_CARACTERES' | translate }}</div>
+
+        <ion-item>
+            <ion-label stacked>{{ 'AREA_ATUACAO' | translate }}</ion-label>
+            <ion-input formControlName="areaAtuacao" [(ngModel)]="preCadastroEntity.areaAtuacao" type="text" spellcheck="false" autocapitalize="off" autocomplete="off" autocorrect="off"></ion-input>
+        </ion-item>
+        <div *ngIf="!cadastrarFornecedorForm.get('areaAtuacao').valid && cadastrarFornecedorForm.get('areaAtuacao').touched" [ngClass]="'class-error-form'">{{ 'CAMPO_OBRIGATORIO' | translate }}</div>
+        <div *ngIf="cadastrarFornecedorForm.get('areaAtuacao').hasError('maxlength')" [ngClass]="'class-error-form'">{{ 'MAX_100_CARACTERES' | translate }}</div>
+
+        <div padding>
+            <button ion-button block type="submit" color="navbarColor" class="margin-button-save span-style-color">{{ 'ENVIAR' | translate }}</button>
+        </div>
+    </form>
+
+</ion-content>

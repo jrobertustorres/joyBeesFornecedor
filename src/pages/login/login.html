@@ -12,7 +12,7 @@
 
         <ion-item style="background: #2C2E32">
             <ion-label stacked color="arrow-color">{{ 'EMAIL' | translate }}</ion-label>
-            <ion-input formControlName="login" type="email" placeholder="Ex.: nome@email.com" spellcheck="false" autocapitalize="off" style="color: #fff;"></ion-input>
+            <ion-input formControlName="login" type="email" placeholder="{{ 'PLACE_EMAIL' | translate }}" spellcheck="false" autocapitalize="off" style="color: #fff;"></ion-input>
         </ion-item>
         <div *ngIf="(!loginForm.get('login').valid && loginForm.get('login').touched) && !loginForm.get('login').hasError('pattern')" [ngClass]="'class-error-form-login'">{{ 'CAMPO_OBRIGATORIO' | translate }}</div>
         <div *ngIf="loginForm.get('login').hasError('pattern')" [ngClass]="'class-error-form-login'">{{ 'EMAIL_INVALIDO' | translate }}</div>
@@ -32,6 +32,14 @@
     </form>
     <div class="forgot-pass-style-div">
         <a (click)="goRecuperarSenha()" style="color: #fff" class="botao01">{{ 'ESQUECI_SENHA' | translate }}</a>
+    </div>
+
+    <div padding style="margin-top: -15px;">
+        <p>
+            <span class="span-cadastrar">
+                    {{ 'SEM_CONTA' | translate }} <span style="float: right;"><strong style="color: #FDB313;" (click)="goCadastroFornecedor()">{{ 'BTN_CADASTRAR' | translate }}</strong></span>
+            </span>
+        </p>
     </div>
 
 </ion-content>

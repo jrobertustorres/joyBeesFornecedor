@@ -188,7 +188,7 @@
     "LABEL_INFORME_DADOS": "Enter the data below that we contact",
     "LABEL_ENCERRADA": "Closed on:",
     "TITLE_CONTATO_ENVIADO": "Contact Sent",
-    "SUBTITLE_CONTATO_ENVIADO": "Thank you for your interest. Soon we will contact you!",
+    "SUBTITLE_CONTATO_ENVIADO": "Thank you for your interest. Soon we will contact you to finalize your registration!",
     "SENHA_ALTERADA_SUCESSO": "Your password has been changed!",
     "TOAST_RECUPERAR_SENHA": "An e-mail was sent with the new password! Please check.",
     "LOADING_TEXT": "Wait...",
@@ -265,7 +265,10 @@
     "LABEL_ACEITAR_SERVICO": "ACCEPT SERVICE",
     "LABEL_VOCE_POSSUI": "You have",
     "LABEL_VOCE_NAO_POSSUI": "You have no coins",
-    "LABEL_MOEDAS": "coins"
+    "LABEL_MOEDAS": "coins",
+    "BTN_CADASTRAR": "REGISTER",
+    "AREA_ATUACAO": "Occupation area",
+    "DADOS_CONTATO": "Contact details"
 
 
 }

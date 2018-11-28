@@ -31,6 +31,7 @@ import { MinhaSenhaPage } from '../pages/minha-senha/minha-senha';
 import { OrcamentosListByStatusPage } from '../pages/orcamentos-list-by-status/orcamentos-list-by-status';
 import { OrcamentoFornecedorDetalhePage } from '../pages/orcamento-fornecedor-detalhe/orcamento-fornecedor-detalhe';
 import { MeusDadosPage } from '../pages/meus-dados/meus-dados';
+import { CadastroFornecedorPage } from '../pages/cadastro-fornecedor/cadastro-fornecedor';
 
 //SERVICES
 import { EstadosService } from '../providers/estados-service';
@@ -51,6 +52,7 @@ import { CotacaoFornecedorEntity } from '../model/cotacao-fornecedor-entity';
 import { ServicoCotacaoFornecedorEntity } from '../model/servico-cotacao-fornecedor-entity';
 import { FornecedorEntity } from '../model/fornecedor-entity';
 import { VersaoAppEntity } from '../model/versao-app-entity';
+import { PreCadastroEntity } from '../model/pre-cadastro-entity';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -76,7 +78,8 @@ export function createTranslateLoader(http: Http) {
     MinhaSenhaPage,
     OrcamentosListByStatusPage,
     OrcamentoFornecedorDetalhePage,
-    MeusDadosPage
+    MeusDadosPage,
+    CadastroFornecedorPage
   ],
   imports: [
     HttpModule,
@@ -110,7 +113,8 @@ export function createTranslateLoader(http: Http) {
     MinhaSenhaPage,
     OrcamentosListByStatusPage,
     OrcamentoFornecedorDetalhePage,
-    MeusDadosPage
+    MeusDadosPage,
+    CadastroFornecedorPage
   ],
   providers: [
     StatusBar,
@@ -132,6 +136,7 @@ export function createTranslateLoader(http: Http) {
     ServicoCotacaoFornecedorEntity,
     FornecedorEntity,
     VersaoAppEntity,
+    PreCadastroEntity,
     DatePicker,
     Push,
     Network,

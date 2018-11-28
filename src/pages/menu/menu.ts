@@ -66,7 +66,6 @@ export class MenuPage implements OnInit{
   }
 
   ngOnInit() {
-    this.getTraducao();
 
     this.usuarioService.userChangeEvent.subscribe(nomePessoa => {
       this.nomePessoa = nomePessoa.split(/(\s).+\s/).join("");
@@ -86,6 +85,8 @@ export class MenuPage implements OnInit{
     this.cockpitCotacaoService.qtdTicketChangeEvent.subscribe(qtdTicketFornecedor => {
       this.qtdTicketFornecedor = qtdTicketFornecedor;
     });
+
+    this.getTraducao();
 
     this.languageProvider.languageChangeEvent.subscribe(selectedLanguage => {
       this.getTraducaoEmited(); // aqui temos que chamar novamente para funcionar a alteração da linguagem no menu
@@ -210,7 +211,8 @@ export class MenuPage implements OnInit{
 
   verificaIdUsuario() {
     if(!localStorage.getItem(Constants.ID_USUARIO)){
-      this.rootPage = HomePage;
+      this.loading.dismiss();
+      this.rootPage = LoginPage;
     }
     else if(localStorage.getItem(Constants.ID_USUARIO)) {
       this.callLoginByIdService(localStorage.getItem(Constants.ID_USUARIO));

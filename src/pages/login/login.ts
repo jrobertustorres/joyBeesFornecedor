@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, AlertController, LoadingController, MenuController } from 'ionic-angular';
+import { NavController, AlertController, LoadingController, MenuController, ModalController } from 'ionic-angular';
 import { RecuperarSenhaPage } from '../recuperar-senha/recuperar-senha';
 import { FormBuilder,	FormGroup, Validators } from '@angular/forms';
 
 //PAGE
 import { HomePage } from '../home/home';
+import { ModalTermosPage } from '../modal-termos/modal-termos';
+import { CadastroFornecedorPage } from '../cadastro-fornecedor/cadastro-fornecedor';
 
 //ENTITY
 import { UsuarioEntity } from '../../model/usuario-entity';
@@ -12,10 +14,6 @@ import { UsuarioEntity } from '../../model/usuario-entity';
 //SERVICES
 import { LoginService } from '../../providers/login-service';
 import { LanguageTranslateService } from '../../providers/language-translate-service';
-
-//I18N
-// import { TranslateService } from '@ngx-translate/core';
-// import { availableLanguages, sysOptions } from '../i18n/i18n-constants';
 
 // @IonicPage()
 @Component({
@@ -41,6 +39,7 @@ export class LoginPage implements OnInit {
               private menu : MenuController,
               private languageTranslateService: LanguageTranslateService,
               // translate: TranslateService,
+              public modalCtrl: ModalController,
               private formBuilder: FormBuilder) {
 
     // this.translate = translate;
@@ -126,6 +125,15 @@ export class LoginPage implements OnInit {
       }
       console.log(err);
     }
+  }
+
+  goCadastroFornecedor() {
+    this.navCtrl.push(CadastroFornecedorPage);
+  }
+
+  openModalTermos(){
+    let modal = this.modalCtrl.create(ModalTermosPage);
+    modal.present();
   }
 
 }
