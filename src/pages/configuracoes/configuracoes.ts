@@ -76,13 +76,15 @@ export class ConfiguracoesPage implements OnInit {
   }
 
   openModalTermos(){
-    let modal = this.modalCtrl.create(ModalTermosPage);
-    modal.present();
+    window.open('http://joybees.com/terms.html', '_system', 'location=yes'); return false;
+    // let modal = this.modalCtrl.create(ModalTermosPage);
+    // modal.present();
   }
 
   openModalPolitica(){
-    let modal = this.modalCtrl.create(ModalPoliticaPrivacidadePage);
-    modal.present();
+    window.open('http://joybees.com/privacy.html', '_system', 'location=yes'); return false;
+    // let modal = this.modalCtrl.create(ModalPoliticaPrivacidadePage);
+    // modal.present();
   }
 
   meusDados() {
