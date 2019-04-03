@@ -51,7 +51,7 @@ export class OrcamentosListByStatusPage {
       .subscribe(dados => {
         this.languageDictionary = dados;
         this.getStatusTranslate();
-        this.findOrcamentosListByStatus();
+        this.findOrcamentosListByStatus(null);
       });
     }
     catch (err){
@@ -62,16 +62,14 @@ export class OrcamentosListByStatusPage {
     }
   }
 
-  loadMore(infiniteScroll) {
-    
+  loadMore(infiniteScroll) {    
     setTimeout(() => {
-
-      this.findOrcamentosListByStatus();
-      infiniteScroll.complete();
+      this.findOrcamentosListByStatus(infiniteScroll);
+      // infiniteScroll.complete();
     }, 500);
   }
 
-  findOrcamentosListByStatus() {
+  findOrcamentosListByStatus(infiniteScroll: any) {
     try {
       this.cotacaoEntity.limiteDados = this.cotacaoEntity.limiteDados ? this.cotacoesList.length : null;
 
@@ -88,6 +86,10 @@ export class OrcamentosListByStatusPage {
       .then((cotacaoServiceResult: CotacaoEntity) => {
         this.cotacoesList = cotacaoServiceResult;
         this.cotacaoEntity.limiteDados = this.cotacoesList.length;
+
+        if(infiniteScroll) {
+          infiniteScroll.complete();
+        }
 
         this.refresh = true;
         this.loading ? this.loading.dismiss() : '';
